@@ -52,6 +52,14 @@ abstract class MemorySegmentIndexInput extends IndexInput implements MemorySegme
       ValueLayout.JAVA_FLOAT_UNALIGNED.withOrder(ByteOrder.LITTLE_ENDIAN);
   private static final Optional<NativeAccess> NATIVE_ACCESS = NativeAccess.getImplementation();
 
+  /**
+   * Measurement-only escape hatch: when set to false, every {@link #prefetch} attempts madvise
+   * instead of sampling on powers of two of the shared counter. Defaults to true, i.e. unchanged
+   * behaviour. Used to quantify how much the sampling suppresses prefetching.
+   */
+  private static final boolean PREFETCH_BACKOFF =
+      Boolean.parseBoolean(System.getProperty("lucene.store.prefetchBackoff", "true"));
+
   final long length;
   final long chunkSizeMask;
   final int chunkSizePower;
@@ -347,7 +355,8 @@ abstract class MemorySegmentIndexInput extends IndexInput implements MemorySegme
 
     ensureOpen();
 
-    if (BitUtil.isZeroOrPowerOfTwo(sharedPrefetchCounter.getAndIncrement()) == false) {
+    if (PREFETCH_BACKOFF
+        && BitUtil.isZeroOrPowerOfTwo(sharedPrefetchCounter.getAndIncrement()) == false) {
       // We've had enough consecutive hits on the page cache that this number is neither zero nor a
       // power of two. There is a good chance that a good chunk of this index input is cached in
       // physical memory. Let's skip the overhead of the madvise system call, we'll be trying again
