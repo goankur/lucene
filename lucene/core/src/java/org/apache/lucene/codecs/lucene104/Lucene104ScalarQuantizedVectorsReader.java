@@ -190,7 +190,22 @@ public class Lucene104ScalarQuantizedVectorsReader extends FlatVectorsReader
 
   @Override
   public RandomVectorScorer getRandomVectorScorer(String field, byte[] target) throws IOException {
-    return rawVectorsReader.getRandomVectorScorer(field, target);
+    FieldEntry fi = fields.get(field);
+    if (fi == null) {
+      // a byte field written before byte vectors were quantized: score the raw vectors
+      return rawVectorsReader.getRandomVectorScorer(field, target);
+    }
+    // Byte fields are quantized from their bytes widened to float as-is, so the query is too.
+    return vectorScorer.getRandomVectorScorer(
+        fi.similarityFunction, loadQuantizedVectorValues(fi), widen(target));
+  }
+
+  private static float[] widen(byte[] vector) {
+    float[] widened = new float[vector.length];
+    for (int i = 0; i < vector.length; i++) {
+      widened[i] = vector[i];
+    }
+    return widened;
   }
 
   @Override
@@ -255,7 +270,13 @@ public class Lucene104ScalarQuantizedVectorsReader extends FlatVectorsReader
 
   @Override
   public ByteVectorValues getByteVectorValues(String field) throws IOException {
-    return rawVectorsReader.getByteVectorValues(field);
+    ByteVectorValues rawByteVectorValues = rawVectorsReader.getByteVectorValues(field);
+    FieldEntry fi = fields.get(field);
+    if (fi == null) {
+      // a byte field written before byte vectors were quantized
+      return rawByteVectorValues;
+    }
+    return new ScalarQuantizedByteVectorValues(rawByteVectorValues, loadQuantizedVectorValues(fi));
   }
 
   @Override
@@ -303,7 +324,12 @@ public class Lucene104ScalarQuantizedVectorsReader extends FlatVectorsReader
   @Override
   public void search(String field, byte[] target, KnnCollector knnCollector, AcceptDocs acceptDocs)
       throws IOException {
-    rawVectorsReader.search(field, target, knnCollector, acceptDocs);
+    if (fields.get(field) == null) {
+      rawVectorsReader.search(field, target, knnCollector, acceptDocs);
+      return;
+    }
+    if (knnCollector.k() == 0) return;
+    exhaustiveBulkScore(getRandomVectorScorer(field, target), knnCollector, acceptDocs);
   }
 
   @Override
@@ -466,16 +492,13 @@ public class Lucene104ScalarQuantizedVectorsReader extends FlatVectorsReader
     if (fi == null) {
       return null;
     }
-    if (fi.vectorEncoding.isFloatingPoint() == false) {
+    if (Lucene104ScalarQuantizedVectorsWriter.isQuantized(fi.vectorEncoding) == false) {
       throw new IllegalArgumentException(
           "field=\""
               + field
               + "\" is encoded as: "
               + fi.vectorEncoding
-              + " expected: "
-              + VectorEncoding.FLOAT32
-              + " or "
-              + VectorEncoding.FLOAT16);
+              + ", which is not quantized");
     }
     return loadQuantizedVectorValues(fi);
   }
@@ -517,10 +540,15 @@ public class Lucene104ScalarQuantizedVectorsReader extends FlatVectorsReader
       return CloseableRandomVectorScorerSupplier.create(supplier, vectorValues.size(), () -> {});
     }
     FloatVectorValues floatVectorValues =
-        fieldInfo.getVectorEncoding() == VectorEncoding.FLOAT16
-            ? new Lucene104ScalarQuantizedVectorsWriter.Float16AsFloatVectorValues(
-                getFloat16VectorValues(fieldInfo.name))
-            : getFloatVectorValues(fieldInfo.name);
+        switch (fieldInfo.getVectorEncoding()) {
+          case FLOAT16 ->
+              new Lucene104ScalarQuantizedVectorsWriter.Float16AsFloatVectorValues(
+                  getFloat16VectorValues(fieldInfo.name));
+          case BYTE ->
+              new Lucene104ScalarQuantizedVectorsWriter.ByteAsFloatVectorValues(
+                  rawVectorsReader.getByteVectorValues(fieldInfo.name));
+          case FLOAT32 -> getFloatVectorValues(fieldInfo.name);
+        };
     if (fieldInfo.getVectorSimilarityFunction() == VectorSimilarityFunction.COSINE) {
       // the index side of this segment was quantized from normalized vectors, the query side must
       // be too
@@ -824,6 +852,77 @@ public class Lucene104ScalarQuantizedVectorsReader extends FlatVectorsReader
 
     @Override
     public VectorScorer rescorer(short[] target) throws IOException {
+      return rawVectorValues.rescorer(target);
+    }
+
+    QuantizedByteVectorValues getQuantizedVectorValues() throws IOException {
+      return quantizedVectorValues;
+    }
+  }
+
+  /**
+   * Byte vector values pairing the raw bytes, read by {@link #vectorValue} and {@link #rescorer},
+   * with their quantized codes, used by {@link #scorer}. Prefetch goes to the raw bytes, because
+   * those are what a rescoring pass reads.
+   */
+  protected static final class ScalarQuantizedByteVectorValues extends ByteVectorValues {
+    private final ByteVectorValues rawVectorValues;
+    private final QuantizedByteVectorValues quantizedVectorValues;
+
+    ScalarQuantizedByteVectorValues(
+        ByteVectorValues rawVectorValues, QuantizedByteVectorValues quantizedVectorValues) {
+      this.rawVectorValues = rawVectorValues;
+      this.quantizedVectorValues = quantizedVectorValues;
+    }
+
+    @Override
+    public int dimension() {
+      return rawVectorValues.dimension();
+    }
+
+    @Override
+    public int size() {
+      return rawVectorValues.size();
+    }
+
+    @Override
+    public byte[] vectorValue(int ord) throws IOException {
+      return rawVectorValues.vectorValue(ord);
+    }
+
+    @Override
+    public boolean prefetch(int ord, int count) throws IOException {
+      return rawVectorValues.prefetch(ord, count);
+    }
+
+    @Override
+    public ScalarQuantizedByteVectorValues copy() throws IOException {
+      return new ScalarQuantizedByteVectorValues(
+          rawVectorValues.copy(), quantizedVectorValues.copy());
+    }
+
+    @Override
+    public Bits getAcceptOrds(Bits acceptDocs) {
+      return rawVectorValues.getAcceptOrds(acceptDocs);
+    }
+
+    @Override
+    public int ordToDoc(int ord) {
+      return rawVectorValues.ordToDoc(ord);
+    }
+
+    @Override
+    public DocIndexIterator iterator() {
+      return rawVectorValues.iterator();
+    }
+
+    @Override
+    public VectorScorer scorer(byte[] query) throws IOException {
+      return quantizedVectorValues.scorer(widen(query));
+    }
+
+    @Override
+    public VectorScorer rescorer(byte[] target) throws IOException {
       return rawVectorValues.rescorer(target);
     }
 

@@ -187,7 +187,10 @@ public final class Lucene99FlatVectorsWriter extends FlatVectorsWriter {
   private static long alignOutput(IndexOutput output, VectorEncoding encoding) throws IOException {
     return output.alignFilePointer(
         switch (encoding) {
-          case BYTE -> Float.BYTES;
+          // A page, so that a rescoring read of one vector touches as few blocks as possible: a
+          // 4096-dim byte vector is exactly one page, and with any smaller alignment every vector
+          // straddles two. The data offset is stored in metadata, so readers are unaffected.
+          case BYTE -> 4096;
           case FLOAT16 -> Float.BYTES;
           case FLOAT32 -> 64; // optimal alignment for Arm Neoverse machines.
         });
