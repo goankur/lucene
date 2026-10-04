@@ -370,9 +370,12 @@ public class Lucene104ScalarQuantizedVectorsWriter extends FlatVectorsWriter {
     // Only asymmetric encodings have query-side records, and both FLOAT16 and FLOAT32 fields
     // score graphs with them. The predicate sees vectorCount before deletions, so it can
     // request data even when the merged field is too small to build a graph.
+    // Byte fields build the merged graph from their raw bytes, as the flush does: an int8 dot
+    // product is exact and cheap enough, and linking nodes by 1-bit distances weakens the graph.
+    // So only floating-point fields prepare the quantized merge scorer.
     boolean prepareQueryData =
         encoding.isAsymmetric()
-            && isQuantized(fieldInfo.getVectorEncoding())
+            && fieldInfo.getVectorEncoding().isFloatingPoint()
             && needsMergeScorer.test(vectorCount);
     long vectorDataOffset = vectorData.alignFilePointer(Float.BYTES);
     DocsWithFieldSet docsWithField;
