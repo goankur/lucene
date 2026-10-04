@@ -23,8 +23,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Decides whether {@link MemorySegmentIndexInput#prefetch} should check the page cache before
  * calling madvise. One instance is shared by all clones and slices of an input.
  *
- * <p>We probe on every call until we have seen {@link #N} consecutive hits, then probe a random one
- * in {@link #SKIP} calls. Any miss sends us back to probing every call.
+ * <p>A new input starts out trusting the page cache and probes a random one in {@link #SKIP} calls.
+ * A miss sends us to probing every call until we have seen {@link #N} consecutive hits again.
+ * Starting confident spares freshly opened files that are already cached from paying N probes each,
+ * while a file that turns out to be cold is caught within about SKIP calls.
  */
 final class PrefetchBackoff {
 
