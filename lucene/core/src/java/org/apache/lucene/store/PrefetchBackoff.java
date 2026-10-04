@@ -37,7 +37,7 @@ final class PrefetchBackoff {
   // bounds the reads we may fail to prefetch after an eviction to about SKIP.
   static final int SKIP = 64;
 
-  private final AtomicInteger consecutiveHits = new AtomicInteger();
+  private final AtomicInteger consecutiveHits = new AtomicInteger(N);
 
   /** Samples at random, so probes don't line up with callers' loops or with fresh clones. */
   boolean shouldProbe() {

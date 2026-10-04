@@ -41,8 +41,14 @@ public class TestPrefetchBackoff extends LuceneTestCase {
     return (double) probes / WINDOW;
   }
 
-  public void testProbesUnconditionallyBeforeN() {
+  public void testStartsConfident() {
+    double expected = 1.0 / SKIP;
+    assertEquals(expected, probeRate(new PrefetchBackoff()), expected * 0.05);
+  }
+
+  public void testProbesUnconditionallyAfterMiss() {
     PrefetchBackoff backoff = new PrefetchBackoff();
+    backoff.onMiss();
     for (int i = 0; i < N; i++) {
       assertTrue("call " + i, backoff.shouldProbe());
       backoff.onHit();
@@ -51,6 +57,7 @@ public class TestPrefetchBackoff extends LuceneTestCase {
 
   public void testSamplesAfterN() {
     PrefetchBackoff backoff = new PrefetchBackoff();
+    backoff.onMiss();
     hit(backoff, 100 * N);
     double expected = 1.0 / SKIP;
     assertEquals(expected, probeRate(backoff), expected * 0.05);
@@ -58,6 +65,7 @@ public class TestPrefetchBackoff extends LuceneTestCase {
 
   public void testMissResets() {
     PrefetchBackoff backoff = new PrefetchBackoff();
+    backoff.onMiss();
     hit(backoff, N);
     assertTrue(probeRate(backoff) < 1.0);
     backoff.onMiss();
