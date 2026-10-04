@@ -58,8 +58,6 @@ abstract class MemorySegmentIndexInput extends IndexInput implements MemorySegme
   final MemorySegment[] segments;
   final Function<IOContext, ReadAdvice> toReadAdvice;
   final PrefetchBackoff backoff;
-  // Per-instance, not shared: clones are single-threaded by contract.
-  private int prefetchCount;
 
   int curSegmentIndex = -1;
   MemorySegment
@@ -347,7 +345,7 @@ abstract class MemorySegmentIndexInput extends IndexInput implements MemorySegme
 
     ensureOpen();
 
-    if (backoff.shouldProbe(prefetchCount++) == false) {
+    if (backoff.shouldProbe() == false) {
       return false;
     }
 
