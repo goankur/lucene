@@ -385,9 +385,20 @@ public class Lucene104ScalarQuantizedVectorsWriter extends FlatVectorsWriter {
       mergeScorerData =
           writeVectorAndQueryData(fieldInfo, mergeState, mergedCentroid, docsWithField);
     } else {
-      QuantizedByteVectorValues quantizedVectorValues =
-          mergedQuantizedVectorValues(fieldInfo, mergeState, mergedCentroid);
-      docsWithField = writeVectorData(vectorData, quantizedVectorValues);
+      if (MERGE_QUANTIZE_THREADS > 1 && vectorCount > MERGE_QUANTIZE_BLOCK) {
+        docsWithField =
+            writeVectorDataParallel(
+                vectorData,
+                mergedFloatVectorValues(fieldInfo, mergeState),
+                new OptimizedScalarQuantizer(fieldInfo.getVectorSimilarityFunction()),
+                encoding,
+                mergedCentroid,
+                MERGE_QUANTIZE_THREADS);
+      } else {
+        QuantizedByteVectorValues quantizedVectorValues =
+            mergedQuantizedVectorValues(fieldInfo, mergeState, mergedCentroid);
+        docsWithField = writeVectorData(vectorData, quantizedVectorValues);
+      }
     }
     try {
       long vectorDataLength = vectorData.getFilePointer() - vectorDataOffset;
@@ -534,6 +545,99 @@ public class Lucene104ScalarQuantizedVectorsWriter extends FlatVectorsWriter {
         IOUtils.deleteFilesIgnoringExceptions(directory, fileName);
       }
     }
+  }
+
+  /**
+   * Threads that quantize the vectors of a merged segment ({@code
+   * -Dlucene.knn.mergeQuantizeThreads}, default 1). Quantization is otherwise a single-threaded
+   * pass over every merged vector, and it dominates the merge time of large segments.
+   */
+  static final int MERGE_QUANTIZE_THREADS =
+      Integer.getInteger("lucene.knn.mergeQuantizeThreads", 1);
+
+  static final int MERGE_QUANTIZE_BLOCK = 8192;
+
+  /**
+   * Writes the same records as {@link #writeVectorData}, but quantizes each block of {@link
+   * #MERGE_QUANTIZE_BLOCK} vectors on {@code threads} threads. The vectors are read in order
+   * (merged values only iterate forward), copied, because {@link
+   * OptimizedScalarQuantizer#scalarQuantize} centers its input in place, quantized in parallel, and
+   * written back in order.
+   */
+  static DocsWithFieldSet writeVectorDataParallel(
+      IndexOutput output,
+      FloatVectorValues values,
+      OptimizedScalarQuantizer quantizer,
+      ScalarEncoding encoding,
+      float[] centroid,
+      int threads)
+      throws IOException {
+    final int dim = values.dimension();
+    final int discrete = encoding.getDiscreteDimensions(dim);
+    final int packedLength =
+        switch (encoding) {
+          case UNSIGNED_BYTE, SEVEN_BIT -> discrete;
+          case PACKED_NIBBLE, SINGLE_BIT_QUERY_NIBBLE, DIBIT_QUERY_NIBBLE ->
+              encoding.getDocPackedLength(discrete);
+        };
+    final int block = MERGE_QUANTIZE_BLOCK;
+    final float[][] vectors = new float[block][dim];
+    final int[] docs = new int[block];
+    final byte[][] packed = new byte[block][packedLength];
+    final OptimizedScalarQuantizer.QuantizationResult[] corrections =
+        new OptimizedScalarQuantizer.QuantizationResult[block];
+    DocsWithFieldSet docsWithField = new DocsWithFieldSet();
+    java.util.concurrent.ExecutorService pool =
+        java.util.concurrent.Executors.newFixedThreadPool(
+            threads, new org.apache.lucene.util.NamedThreadFactory("merge-quantize"));
+    try {
+      KnnVectorValues.DocIndexIterator iterator = values.iterator();
+      int docV = iterator.nextDoc();
+      while (docV != NO_MORE_DOCS) {
+        int n = 0;
+        for (; n < block && docV != NO_MORE_DOCS; n++, docV = iterator.nextDoc()) {
+          System.arraycopy(values.vectorValue(iterator.index()), 0, vectors[n], 0, dim);
+          docs[n] = docV;
+        }
+        final int count = n;
+        final int chunk = (count + threads - 1) / threads;
+        java.util.List<java.util.concurrent.Future<?>> futures = new java.util.ArrayList<>();
+        for (int t = 0; t < threads; t++) {
+          final int from = t * chunk, to = Math.min(count, from + chunk);
+          if (from >= to) {
+            break;
+          }
+          futures.add(
+              pool.submit(
+                  () -> {
+                    byte[] scratch = new byte[discrete];
+                    for (int i = from; i < to; i++) {
+                      corrections[i] =
+                          quantizer.scalarQuantize(
+                              vectors[i], scratch, encoding.getBits(), centroid);
+                      packIndexRecord(encoding, scratch, packed[i]);
+                    }
+                  }));
+        }
+        for (java.util.concurrent.Future<?> f : futures) {
+          try {
+            f.get();
+          } catch (InterruptedException e) {
+            throw new org.apache.lucene.util.ThreadInterruptedException(e);
+          } catch (java.util.concurrent.ExecutionException e) {
+            throw org.apache.lucene.util.IOUtils.rethrowAlways(e.getCause());
+          }
+        }
+        for (int i = 0; i < count; i++) {
+          output.writeBytes(packed[i], packedLength);
+          writeCorrections(output, corrections[i]);
+          docsWithField.add(docs[i]);
+        }
+      }
+    } finally {
+      pool.shutdownNow();
+    }
+    return docsWithField;
   }
 
   static DocsWithFieldSet writeVectorData(
