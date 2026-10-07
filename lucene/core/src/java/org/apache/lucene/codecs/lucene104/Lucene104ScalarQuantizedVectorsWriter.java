@@ -30,6 +30,10 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.IntPredicate;
 import org.apache.lucene.codecs.CodecUtil;
 import org.apache.lucene.codecs.KnnVectorsReader;
@@ -58,7 +62,9 @@ import org.apache.lucene.store.FileTypeHint;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.util.IOUtils;
+import org.apache.lucene.util.NamedThreadFactory;
 import org.apache.lucene.util.RamUsageEstimator;
+import org.apache.lucene.util.ThreadInterruptedException;
 import org.apache.lucene.util.VectorUtil;
 import org.apache.lucene.util.hnsw.CloseableRandomVectorScorerSupplier;
 import org.apache.lucene.util.quantization.OptimizedScalarQuantizer;
@@ -587,9 +593,8 @@ public class Lucene104ScalarQuantizedVectorsWriter extends FlatVectorsWriter {
     final OptimizedScalarQuantizer.QuantizationResult[] corrections =
         new OptimizedScalarQuantizer.QuantizationResult[block];
     DocsWithFieldSet docsWithField = new DocsWithFieldSet();
-    java.util.concurrent.ExecutorService pool =
-        java.util.concurrent.Executors.newFixedThreadPool(
-            threads, new org.apache.lucene.util.NamedThreadFactory("merge-quantize"));
+    ExecutorService pool =
+        Executors.newFixedThreadPool(threads, new NamedThreadFactory("merge-quantize"));
     try {
       KnnVectorValues.DocIndexIterator iterator = values.iterator();
       int docV = iterator.nextDoc();
@@ -601,7 +606,7 @@ public class Lucene104ScalarQuantizedVectorsWriter extends FlatVectorsWriter {
         }
         final int count = n;
         final int chunk = (count + threads - 1) / threads;
-        java.util.List<java.util.concurrent.Future<?>> futures = new java.util.ArrayList<>();
+        List<Future<?>> futures = new ArrayList<>();
         for (int t = 0; t < threads; t++) {
           final int from = t * chunk, to = Math.min(count, from + chunk);
           if (from >= to) {
@@ -619,13 +624,13 @@ public class Lucene104ScalarQuantizedVectorsWriter extends FlatVectorsWriter {
                     }
                   }));
         }
-        for (java.util.concurrent.Future<?> f : futures) {
+        for (Future<?> f : futures) {
           try {
             f.get();
           } catch (InterruptedException e) {
-            throw new org.apache.lucene.util.ThreadInterruptedException(e);
-          } catch (java.util.concurrent.ExecutionException e) {
-            throw org.apache.lucene.util.IOUtils.rethrowAlways(e.getCause());
+            throw new ThreadInterruptedException(e);
+          } catch (ExecutionException e) {
+            throw IOUtils.rethrowAlways(e.getCause());
           }
         }
         for (int i = 0; i < count; i++) {

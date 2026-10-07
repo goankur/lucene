@@ -16,7 +16,10 @@
  */
 package org.apache.lucene.codecs.lucene104;
 
+import static org.apache.lucene.search.DocIdSetIterator.NO_MORE_DOCS;
+
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.lucene.codecs.Codec;
@@ -106,9 +109,7 @@ public class TestLucene104ByteVectorQuantization extends LuceneTestCase {
         IndexSearcher searcher = newSearcher(reader);
         var stored = reader.storedFields();
         var it = values.iterator();
-        for (int doc = it.nextDoc();
-            doc != org.apache.lucene.search.DocIdSetIterator.NO_MORE_DOCS;
-            doc = it.nextDoc()) {
+        for (int doc = it.nextDoc(); doc != NO_MORE_DOCS; doc = it.nextDoc()) {
           int id = stored.document(doc).getField("id").numericValue().intValue();
           assertArrayEquals(docs[id], values.vectorValue(it.index()));
         }
@@ -139,7 +140,7 @@ public class TestLucene104ByteVectorQuantization extends LuceneTestCase {
     for (int i = 0; i < ids.length; i++) {
       ids[i] = i;
     }
-    java.util.Arrays.sort(
+    Arrays.sort(
         ids,
         (a, b) ->
             Integer.compare(
