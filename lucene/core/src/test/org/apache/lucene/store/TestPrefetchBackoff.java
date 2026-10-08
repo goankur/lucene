@@ -58,8 +58,13 @@ public class TestPrefetchBackoff extends LuceneTestCase {
     assertEquals(1, Integer.bitCount(SKIP));
   }
 
+  public void testStartsConfident() {
+    assertSampling(new PrefetchBackoff());
+  }
+
   public void testStartsColdThenSamples() {
     PrefetchBackoff backoff = new PrefetchBackoff();
+    backoff.onMiss();
     for (int i = 0; i < N; i++) {
       assertTrue("call " + i, backoff.shouldProbe((long) i << 12));
       backoff.onHit();
@@ -81,6 +86,7 @@ public class TestPrefetchBackoff extends LuceneTestCase {
 
   public void testMissProbesUnconditionallyUntilNHits() {
     PrefetchBackoff backoff = new PrefetchBackoff();
+    backoff.onMiss();
     hit(backoff, N);
     assertSampling(backoff);
     backoff.onMiss();
@@ -93,6 +99,7 @@ public class TestPrefetchBackoff extends LuceneTestCase {
 
   public void testHitsPastNAreNoOps() {
     PrefetchBackoff backoff = new PrefetchBackoff();
+    backoff.onMiss();
     hit(backoff, 100 * N);
     assertSampling(backoff);
     // still exactly one miss away from re-arming
