@@ -346,7 +346,7 @@ abstract class MemorySegmentIndexInput extends IndexInput implements MemorySegme
 
     ensureOpen();
 
-    if (backoff.shouldProbe() == false) {
+    if (backoff.shouldProbe(offset) == false) {
       return false;
     }
 

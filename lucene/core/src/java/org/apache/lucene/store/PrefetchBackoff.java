@@ -16,8 +16,8 @@
  */
 package org.apache.lucene.store;
 
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.apache.lucene.internal.hppc.BitMixer;
 
 /**
  * Decides whether {@link MemorySegmentIndexInput#prefetch} should check the page cache before
@@ -55,10 +55,12 @@ final class PrefetchBackoff {
     consecutiveHits = new AtomicInteger(preloaded ? N : 0);
   }
 
-  boolean shouldProbe() {
-    // ThreadLocalRandom keeps its state in Thread fields: nothing per clone to allocate or keep in
-    // sync, and no counter for callers' loops to line up with.
-    return consecutiveHits.get() < N || (ThreadLocalRandom.current().nextInt() & (SKIP - 1)) == 0;
+  /**
+   * Samples by page: the decision is a hash of the page that holds {@code offset}, so it is
+   * deterministic, needs no state, and does not line up with callers' loops or depend on clones.
+   */
+  boolean shouldProbe(long offset) {
+    return consecutiveHits.get() < N || (BitMixer.mix64(offset >>> 12) & (SKIP - 1)) == 0;
   }
 
   // Both updates are racy on purpose. A lost increment or a repeated reset is harmless, and the

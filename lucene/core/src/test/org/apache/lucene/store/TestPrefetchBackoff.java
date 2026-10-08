@@ -41,7 +41,7 @@ public class TestPrefetchBackoff extends LuceneTestCase {
   private static double probeRate(PrefetchBackoff backoff) {
     int probes = 0;
     for (int i = 0; i < WINDOW; i++) {
-      if (backoff.shouldProbe()) {
+      if (backoff.shouldProbe((long) i << 12)) {
         probes++;
       }
     }
@@ -61,7 +61,7 @@ public class TestPrefetchBackoff extends LuceneTestCase {
   public void testStartsColdThenSamples() {
     PrefetchBackoff backoff = new PrefetchBackoff();
     for (int i = 0; i < N; i++) {
-      assertTrue("call " + i, backoff.shouldProbe());
+      assertTrue("call " + i, backoff.shouldProbe((long) i << 12));
       backoff.onHit();
     }
     assertSampling(backoff);
@@ -73,7 +73,7 @@ public class TestPrefetchBackoff extends LuceneTestCase {
     // a miss still re-arms the full ramp
     backoff.onMiss();
     for (int i = 0; i < N; i++) {
-      assertTrue("call " + i, backoff.shouldProbe());
+      assertTrue("call " + i, backoff.shouldProbe((long) i << 12));
       backoff.onHit();
     }
     assertSampling(backoff);
@@ -85,7 +85,7 @@ public class TestPrefetchBackoff extends LuceneTestCase {
     assertSampling(backoff);
     backoff.onMiss();
     for (int i = 0; i < N; i++) {
-      assertTrue("call " + i, backoff.shouldProbe());
+      assertTrue("call " + i, backoff.shouldProbe((long) i << 12));
       backoff.onHit();
     }
     assertSampling(backoff);
@@ -98,7 +98,7 @@ public class TestPrefetchBackoff extends LuceneTestCase {
     // still exactly one miss away from re-arming
     backoff.onMiss();
     for (int i = 0; i < N; i++) {
-      assertTrue("call " + i, backoff.shouldProbe());
+      assertTrue("call " + i, backoff.shouldProbe((long) i << 12));
       backoff.onHit();
     }
     assertSampling(backoff);
@@ -110,9 +110,9 @@ public class TestPrefetchBackoff extends LuceneTestCase {
       backoff.onMiss();
       hit(backoff, hits);
       backoff.onMiss();
-      assertTrue("hits=" + hits, backoff.shouldProbe());
+      assertTrue("hits=" + hits, backoff.shouldProbe((long) hits << 12));
       backoff.onHit();
-      assertTrue("hits=" + hits, backoff.shouldProbe());
+      assertTrue("hits=" + hits, backoff.shouldProbe((long) hits << 12));
     }
   }
 
@@ -139,7 +139,7 @@ public class TestPrefetchBackoff extends LuceneTestCase {
                 () -> {
                   int local = 0;
                   for (int i = 0; i < WINDOW; i++) {
-                    if (backoff.shouldProbe()) {
+                    if (backoff.shouldProbe((long) i << 12)) {
                       local++;
                     }
                   }
