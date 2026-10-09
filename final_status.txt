@@ -1,0 +1,46 @@
+2026-10-09T01:08:42+00:00 P0 build arms + JMH benchmarks
+2026-10-09T01:08:51+00:00 P0 arm A git=0f0e865b2d core_md5=63d53e5dfd14 bytecode ok
+2026-10-09T01:09:23+00:00 P0 arm K git=965519d582 core_md5=d1f7a5d37a7f bytecode ok
+2026-10-09T01:09:39+00:00 P0 arm G git=6181b99064 core_md5=b3e3fd700a63 bytecode ok
+2026-10-09T01:10:11+00:00 P0 arm J git=cb22ab0086 core_md5=d0f3776a57ed bytecode ok
+2026-10-09T01:10:11+00:00 P0 25M index manifest matches EBS
+2026-10-09T01:10:11+00:00 P1 25M rerank: 5 arms x {10G,20G} x 2 reps
+2026-10-09T02:56:45+00:00 P1 done
+2026-10-09T02:56:45+00:00 P2 wikimedium10m pairs
+2026-10-09T02:56:50+00:00 P2 resident before FAA: 1.0001
+2026-10-09T02:56:50+00:00 FINAL FAILED: FAA
+2026-10-09T02:59:27+00:00 RESUME from P2 (bo_lu_pair6.sh was missing)
+2026-10-09T02:59:27+00:00 P2 wikimedium10m pairs
+2026-10-09T02:59:28+00:00 P2 resident before FAA: 1.0001
+2026-10-09T03:07:44+00:00 P2 resident before FAB: 1.0001
+2026-10-09T03:16:15+00:00 P2 resident before FAK: 1.0001
+2026-10-09T03:24:23+00:00 P2 resident before FAG: 1.0001
+2026-10-09T03:33:02+00:00 P2 resident before FAJ: 1.0001
+2026-10-09T03:41:22+00:00 P2 resident before FAKc: 0.0000
+2026-10-09T03:49:40+00:00 P2 resident before FAGc: 0.0000
+2026-10-09T03:58:11+00:00 P2 resident before FAJc: 0.0000
+2026-10-09T04:06:46+00:00 P2 done
+2026-10-09T04:06:46+00:00 P3 JMH (kit from michaeljmarshall e7138cc4, -f 1): variants A K G J x hot pressure cold hot2
+2026-10-09T04:16:12+00:00 P3 A hot done
+2026-10-09T04:24:57+00:00 P3 K hot done
+2026-10-09T04:33:42+00:00 P3 G hot done
+2026-10-09T04:42:27+00:00 P3 J hot done
+2026-10-09T05:05:41+00:00 P3 A pressure done
+2026-10-09T05:17:38+00:00 P3 K pressure done
+2026-10-09T05:29:36+00:00 P3 G pressure done
+2026-10-09T05:41:34+00:00 P3 J pressure done
+2026-10-09T05:51:36+00:00 P3 A cold done
+2026-10-09T06:01:25+00:00 P3 K cold done
+2026-10-09T06:11:14+00:00 P3 G cold done
+2026-10-09T06:21:03+00:00 P3 J cold done
+2026-10-09T06:29:48+00:00 P3 A hot2 done
+2026-10-09T06:38:33+00:00 P3 K hot2 done
+2026-10-09T06:47:18+00:00 P3 G hot2 done
+2026-10-09T06:56:03+00:00 P3 J hot2 done
+2026-10-09T06:56:03+00:00 P3 done
+FINAL_DONE
+2026-10-09T06:56:10+00:00 P4 resident before FGAc: 0.0000
+2026-10-09T07:04:41+00:00 P4 resident before FJAc: 0.0000
+2026-10-09T07:13:01+00:00 P4 resident before FKAc: 0.0000
+2026-10-09T07:21:29+00:00 P4 done
+P4_DONE

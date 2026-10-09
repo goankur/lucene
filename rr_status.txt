@@ -1,0 +1,100 @@
+2026-10-04T04:05:35+00:00 A_r1 arm=A core_md5=63d53e5dfd14 extra=[] unit=bo-A_r1-287420
+2026-10-04T04:21:30+00:00 A_r1 LATENCY_PCT_MS p50=47.525 p90=110.186 p99=172.184 p999=196.790 max=225.857 recall=51.490 @madvise_willneed:1050710 @major_faults:3881426 @mincore:1271046 
+2026-10-04T04:21:34+00:00 B_r1 arm=A core_md5=63d53e5dfd14 extra=[-Dlucene.store.prefetchBackoff=false] unit=bo-B_r1-299911
+2026-10-04T04:25:00+00:00 B_r1 LATENCY_PCT_MS p50=9.529 p90=14.922 p99=17.054 p999=20.418 max=27.055 recall=9.356 @madvise_willneed:2292274 @major_faults:405384 @mincore:4815872 
+2026-10-04T04:25:03+00:00 C_r1 arm=C core_md5=48f6ada8180d extra=[] unit=bo-C_r1-302676
+2026-10-04T04:28:29+00:00 C_r1 LATENCY_PCT_MS p50=9.590 p90=14.990 p99=17.093 p999=19.926 max=25.961 recall=9.397 @madvise_willneed:2293787 @major_faults:370509 @mincore:4784367 
+2026-10-04T04:28:32+00:00 D_r1 arm=D core_md5=c1c520d5a84a extra=[] unit=bo-D_r1-305487
+2026-10-04T04:32:00+00:00 D_r1 LATENCY_PCT_MS p50=9.666 p90=15.044 p99=17.341 p999=22.224 max=29.923 recall=9.430 @madvise_willneed:2304229 @major_faults:380764 @mincore:4794254 
+2026-10-04T04:32:03+00:00 E_r1 arm=E core_md5=f792684e49fb extra=[] unit=bo-E_r1-307787
+2026-10-04T04:35:32+00:00 E_r1 LATENCY_PCT_MS p50=9.600 p90=14.963 p99=17.120 p999=20.856 max=26.705 recall=9.402 @madvise_willneed:2302254 @major_faults:380956 @mincore:4815044 
+2026-10-04T04:35:34+00:00 E_r2 arm=E core_md5=f792684e49fb extra=[] unit=bo-E_r2-310515
+2026-10-04T04:39:00+00:00 E_r2 LATENCY_PCT_MS p50=9.531 p90=14.965 p99=16.987 p999=19.940 max=25.440 recall=9.369 @madvise_willneed:2290643 @major_faults:375367 @mincore:4748073 
+2026-10-04T04:39:03+00:00 D_r2 arm=D core_md5=c1c520d5a84a extra=[] unit=bo-D_r2-313287
+2026-10-04T04:42:29+00:00 D_r2 LATENCY_PCT_MS p50=9.555 p90=14.943 p99=17.289 p999=22.965 max=42.977 recall=9.413 @madvise_willneed:2288199 @major_faults:372490 @mincore:4698871 
+2026-10-04T04:42:32+00:00 C_r2 arm=C core_md5=48f6ada8180d extra=[] unit=bo-C_r2-316080
+2026-10-04T04:46:01+00:00 C_r2 LATENCY_PCT_MS p50=9.594 p90=14.971 p99=16.999 p999=19.712 max=25.979 recall=9.402 @madvise_willneed:2300983 @major_faults:372449 @mincore:4799303 
+2026-10-04T04:46:03+00:00 B_r2 arm=A core_md5=63d53e5dfd14 extra=[-Dlucene.store.prefetchBackoff=false] unit=bo-B_r2-318357
+2026-10-04T04:49:30+00:00 B_r2 LATENCY_PCT_MS p50=9.579 p90=14.971 p99=17.021 p999=20.235 max=26.569 recall=9.372 @madvise_willneed:2301202 @major_faults:371622 @mincore:4834587 
+2026-10-04T04:49:33+00:00 A_r2 arm=A core_md5=63d53e5dfd14 extra=[] unit=bo-A_r2-321118
+2026-10-04T05:05:25+00:00 A_r2 LATENCY_PCT_MS p50=47.590 p90=108.822 p99=171.941 p999=195.481 max=220.325 recall=51.339 @madvise_willneed:1051829 @major_faults:3847810 @mincore:1272345 
+2026-10-04T05:48:05+00:00 HA_r1 arm=A mem=20G core_md5=63d53e5dfd14 extra=[] unit=bo-HA_r1-427330
+2026-10-04T06:01:37+00:00 HA_r1 LATENCY_PCT_MS p50=42.216 p90=95.732 p99=131.701 p999=143.197 max=148.820 recall=43.319 @madvise_willneed:673331 @major_faults:1420422 @mincore:882431 
+2026-10-04T06:01:43+00:00 HB_r1 arm=A mem=20G core_md5=63d53e5dfd14 extra=[-Dlucene.store.prefetchBackoff=false] unit=bo-HB_r1-436953
+2026-10-04T06:04:06+00:00 HB_r1 LATENCY_PCT_MS p50=4.968 p90=6.428 p99=7.550 p999=10.380 max=14.192 recall=4.984 @madvise_willneed:0 @major_faults:1 @mincore:4629000 
+2026-10-04T06:04:10+00:00 HC_r1 arm=C mem=20G core_md5=48f6ada8180d extra=[] unit=bo-HC_r1-439041
+2026-10-04T06:06:25+00:00 HC_r1 LATENCY_PCT_MS p50=4.140 p90=5.587 p99=6.654 p999=9.353 max=13.184 recall=4.152 @madvise_willneed:0 @major_faults:0 @mincore:267916 
+2026-10-04T06:06:28+00:00 HD_r1 arm=D mem=20G core_md5=c1c520d5a84a extra=[] unit=bo-HD_r1-440484
+2026-10-04T06:08:45+00:00 HD_r1 LATENCY_PCT_MS p50=4.094 p90=5.555 p99=6.578 p999=9.323 max=13.439 recall=4.104 @madvise_willneed:0 @major_faults:0 @mincore:73967 
+2026-10-04T06:08:48+00:00 HE_r1 arm=E mem=20G core_md5=f792684e49fb extra=[] unit=bo-HE_r1-442859
+2026-10-04T06:11:03+00:00 HE_r1 LATENCY_PCT_MS p50=4.083 p90=5.526 p99=6.486 p999=9.700 max=13.306 recall=4.095 @madvise_willneed:0 @major_faults:0 @mincore:104215 
+2026-10-04T06:11:06+00:00 HE_r2 arm=E mem=20G core_md5=f792684e49fb extra=[] unit=bo-HE_r2-444490
+2026-10-04T06:13:21+00:00 HE_r2 LATENCY_PCT_MS p50=4.109 p90=5.584 p99=6.716 p999=9.558 max=13.201 recall=4.129 @madvise_willneed:0 @major_faults:0 @mincore:105983 
+2026-10-04T06:13:24+00:00 HD_r2 arm=D mem=20G core_md5=c1c520d5a84a extra=[] unit=bo-HD_r2-446568
+2026-10-04T06:15:39+00:00 HD_r2 LATENCY_PCT_MS p50=4.047 p90=5.488 p99=6.537 p999=9.409 max=13.353 recall=4.059 @madvise_willneed:0 @major_faults:1 @mincore:71569 
+2026-10-04T06:15:42+00:00 HC_r2 arm=C mem=20G core_md5=48f6ada8180d extra=[] unit=bo-HC_r2-448017
+2026-10-04T06:17:57+00:00 HC_r2 LATENCY_PCT_MS p50=4.145 p90=5.570 p99=6.668 p999=9.762 max=13.267 recall=4.152 @madvise_willneed:0 @major_faults:0 @mincore:270199 
+2026-10-04T06:18:00+00:00 HB_r2 arm=A mem=20G core_md5=63d53e5dfd14 extra=[-Dlucene.store.prefetchBackoff=false] unit=bo-HB_r2-450096
+2026-10-04T06:20:25+00:00 HB_r2 LATENCY_PCT_MS p50=4.979 p90=6.443 p99=7.566 p999=10.485 max=14.226 recall=4.995 @madvise_willneed:0 @major_faults:0 @mincore:4674000 
+2026-10-04T06:20:29+00:00 HA_r2 arm=A mem=20G core_md5=63d53e5dfd14 extra=[] unit=bo-HA_r2-452325
+2026-10-04T06:34:07+00:00 HA_r2 LATENCY_PCT_MS p50=42.499 p90=97.737 p99=132.677 p999=143.157 max=149.236 recall=43.919 @madvise_willneed:646482 @major_faults:1448704 @mincore:847517 
+2026-10-04T07:25:07+00:00 F128_r1 arm=F mem=10G core_md5=3e1990589079 extra=[-Dbo.N=128 -Dbo.SKIP=64] unit=bo-F128_r1-592116
+2026-10-04T07:28:59+00:00 F128_r1 LATENCY_PCT_MS p50=10.261 p90=15.628 p99=47.197 p999=88.608 max=109.464 recall=10.788 @madvise_willneed:2266581 @major_faults:522004 @mincore:3718614 
+2026-10-04T07:29:02+00:00 HF128_r1 arm=F mem=20G core_md5=3e1990589079 extra=[-Dbo.N=128 -Dbo.SKIP=64] unit=bo-HF128_r1-595446
+2026-10-04T07:32:18+00:00 HF128_r1 LATENCY_PCT_MS p50=8.461 p90=12.869 p99=51.960 p999=82.770 max=111.262 recall=9.218 @madvise_willneed:1965002 @major_faults:71170 @mincore:3337155 
+2026-10-04T07:58:50+00:00 G_r1 arm=G mem=10G core_md5=b3e3fd700a63 extra=[] unit=bo-G_r1-665780
+2026-10-04T08:02:17+00:00 G_r1 LATENCY_PCT_MS p50=9.531 p90=14.858 p99=17.472 p999=23.041 max=31.668 recall=9.354 @madvise_willneed:2291829 @major_faults:337471 @mincore:4709707 
+2026-10-04T08:02:19+00:00 HG_r1 arm=G mem=20G core_md5=b3e3fd700a63 extra=[] unit=bo-HG_r1-668349
+2026-10-04T08:04:34+00:00 HG_r1 LATENCY_PCT_MS p50=4.106 p90=5.576 p99=6.592 p999=9.730 max=13.538 recall=4.119 @madvise_willneed:0 @major_faults:0 @mincore:73063 
+2026-10-04T08:04:37+00:00 G_r2 arm=G mem=10G core_md5=b3e3fd700a63 extra=[] unit=bo-G_r2-670620
+2026-10-04T08:08:03+00:00 G_r2 LATENCY_PCT_MS p50=9.552 p90=14.826 p99=17.179 p999=21.876 max=28.877 recall=9.338 @madvise_willneed:2288628 @major_faults:331637 @mincore:4695943 
+2026-10-04T08:08:05+00:00 HG_r2 arm=G mem=20G core_md5=b3e3fd700a63 extra=[] unit=bo-HG_r2-672977
+2026-10-04T08:10:22+00:00 HG_r2 LATENCY_PCT_MS p50=4.102 p90=5.541 p99=6.546 p999=9.522 max=13.033 recall=4.099 @madvise_willneed:0 @major_faults:0 @mincore:73872 
+2026-10-04T22:11:42+00:00 H_r1 arm=H mem=10G core_md5=b7756ab99543 extra=[] unit=bo-H_r1-1118760
+2026-10-04T22:15:08+00:00 H_r1 LATENCY_PCT_MS p50=9.523 p90=14.887 p99=17.022 p999=20.025 max=26.867 recall=9.354 @madvise_willneed:2291292 @major_faults:364311 @mincore:4764537 
+2026-10-04T22:15:10+00:00 HH_r1 arm=H mem=20G core_md5=b7756ab99543 extra=[] unit=bo-HH_r1-1121556
+2026-10-04T22:17:25+00:00 HH_r1 LATENCY_PCT_MS p50=4.144 p90=5.599 p99=6.740 p999=9.728 max=13.428 recall=4.151 @madvise_willneed:0 @major_faults:0 @mincore:104282 
+2026-10-04T22:17:28+00:00 H_r2 arm=H mem=10G core_md5=b7756ab99543 extra=[] unit=bo-H_r2-1123646
+2026-10-04T22:20:54+00:00 H_r2 LATENCY_PCT_MS p50=9.535 p90=14.929 p99=16.986 p999=20.929 max=27.316 recall=9.373 @madvise_willneed:2294767 @major_faults:355575 @mincore:4786274 
+2026-10-04T22:20:57+00:00 HH_r2 arm=H mem=20G core_md5=b7756ab99543 extra=[] unit=bo-HH_r2-1126896
+2026-10-04T22:23:13+00:00 HH_r2 LATENCY_PCT_MS p50=4.147 p90=5.652 p99=6.821 p999=9.391 max=13.544 recall=4.171 @madvise_willneed:0 @major_faults:0 @mincore:112022 
+2026-10-09T01:10:24+00:00 F10_A_r1 arm=A mem=10G core_md5=63d53e5dfd14 extra=[] unit=bo-F10_A_r1-4148219
+2026-10-09T01:26:21+00:00 F10_A_r1 LATENCY_PCT_MS p50=47.917 p90=108.699 p99=172.382 p999=195.234 max=220.487 recall=51.504 @madvise_willneed:1055289 @major_faults:3848628 @mincore:1276443 
+2026-10-09T01:26:25+00:00 F20_A_r1 arm=A mem=20G core_md5=63d53e5dfd14 extra=[] unit=bo-F20_A_r1-4160183
+2026-10-09T01:39:59+00:00 F20_A_r1 LATENCY_PCT_MS p50=42.402 p90=95.667 p99=131.046 p999=144.216 max=148.906 recall=43.398 @madvise_willneed:673712 @major_faults:1425353 @mincore:882932 
+2026-10-09T01:40:05+00:00 F10_B_r1 arm=A mem=10G core_md5=63d53e5dfd14 extra=[-Dlucene.store.prefetchBackoff=false] unit=bo-F10_B_r1-4170129
+2026-10-09T01:43:34+00:00 F10_B_r1 LATENCY_PCT_MS p50=9.632 p90=15.059 p99=17.079 p999=20.663 max=27.996 recall=9.486 @madvise_willneed:2303149 @major_faults:379943 @mincore:4881500 
+2026-10-09T01:43:36+00:00 F20_B_r1 arm=A mem=20G core_md5=63d53e5dfd14 extra=[-Dlucene.store.prefetchBackoff=false] unit=bo-F20_B_r1-4172478
+2026-10-09T01:46:02+00:00 F20_B_r1 LATENCY_PCT_MS p50=5.040 p90=6.553 p99=7.653 p999=10.321 max=14.600 recall=5.059 @madvise_willneed:0 @major_faults:0 @mincore:4769595 
+2026-10-09T01:46:05+00:00 F10_K_r1 arm=K mem=10G core_md5=d1f7a5d37a7f extra=[] unit=bo-F10_K_r1-4174561
+2026-10-09T01:49:35+00:00 F10_K_r1 LATENCY_PCT_MS p50=9.734 p90=15.242 p99=17.553 p999=22.800 max=31.613 recall=9.550 @madvise_willneed:2288451 @major_faults:378887 @mincore:4658057 
+2026-10-09T01:49:38+00:00 F20_K_r1 arm=K mem=20G core_md5=d1f7a5d37a7f extra=[] unit=bo-F20_K_r1-4177285
+2026-10-09T01:51:57+00:00 F20_K_r1 LATENCY_PCT_MS p50=4.222 p90=5.763 p99=6.828 p999=9.805 max=13.903 recall=4.239 @madvise_willneed:0 @major_faults:0 @mincore:71143 
+2026-10-09T01:52:00+00:00 F10_G_r1 arm=G mem=10G core_md5=b3e3fd700a63 extra=[] unit=bo-F10_G_r1-4178736
+2026-10-09T01:55:29+00:00 F10_G_r1 LATENCY_PCT_MS p50=9.699 p90=15.028 p99=17.454 p999=23.291 max=34.560 recall=9.475 @madvise_willneed:2303678 @major_faults:353121 @mincore:4774630 
+2026-10-09T01:55:31+00:00 F20_G_r1 arm=G mem=20G core_md5=b3e3fd700a63 extra=[] unit=bo-F20_G_r1-4181506
+2026-10-09T01:57:50+00:00 F20_G_r1 LATENCY_PCT_MS p50=4.217 p90=5.743 p99=6.791 p999=9.617 max=14.393 recall=4.233 @madvise_willneed:0 @major_faults:0 @mincore:73979 
+2026-10-09T01:57:53+00:00 F10_J_r1 arm=J mem=10G core_md5=d0f3776a57ed extra=[] unit=bo-F10_J_r1-4182945
+2026-10-09T02:01:24+00:00 F10_J_r1 LATENCY_PCT_MS p50=9.705 p90=15.105 p99=17.463 p999=23.695 max=35.060 recall=9.518 @madvise_willneed:2294768 @major_faults:332583 @mincore:4681092 
+2026-10-09T02:01:26+00:00 F20_J_r1 arm=J mem=20G core_md5=d0f3776a57ed extra=[] unit=bo-F20_J_r1-4185767
+2026-10-09T02:03:45+00:00 F20_J_r1 LATENCY_PCT_MS p50=4.208 p90=5.747 p99=6.843 p999=9.528 max=14.322 recall=4.221 @madvise_willneed:0 @major_faults:0 @mincore:70430 
+2026-10-09T02:03:48+00:00 F10_J_r2 arm=J mem=10G core_md5=d0f3776a57ed extra=[] unit=bo-F10_J_r2-4187338
+2026-10-09T02:07:19+00:00 F10_J_r2 LATENCY_PCT_MS p50=9.756 p90=15.088 p99=17.662 p999=24.834 max=34.112 recall=9.528 @madvise_willneed:2291111 @major_faults:329361 @mincore:4662457 
+2026-10-09T02:07:22+00:00 F20_J_r2 arm=J mem=20G core_md5=d0f3776a57ed extra=[] unit=bo-F20_J_r2-4190320
+2026-10-09T02:09:41+00:00 F20_J_r2 LATENCY_PCT_MS p50=4.196 p90=5.733 p99=6.899 p999=9.562 max=14.072 recall=4.220 @madvise_willneed:0 @major_faults:0 @mincore:67498 
+2026-10-09T02:09:44+00:00 F10_G_r2 arm=G mem=10G core_md5=b3e3fd700a63 extra=[] unit=bo-F10_G_r2-4192347
+2026-10-09T02:13:12+00:00 F10_G_r2 LATENCY_PCT_MS p50=9.631 p90=15.005 p99=17.203 p999=21.516 max=34.630 recall=9.456 @madvise_willneed:2288315 @major_faults:350685 @mincore:4641104 
+2026-10-09T02:13:14+00:00 F20_G_r2 arm=G mem=20G core_md5=b3e3fd700a63 extra=[] unit=bo-F20_G_r2-791
+2026-10-09T02:15:31+00:00 F20_G_r2 LATENCY_PCT_MS p50=4.128 p90=5.615 p99=6.678 p999=9.519 max=13.555 recall=4.141 @madvise_willneed:0 @major_faults:0 @mincore:75174 
+2026-10-09T02:15:35+00:00 F10_K_r2 arm=K mem=10G core_md5=d1f7a5d37a7f extra=[] unit=bo-F10_K_r2-2802
+2026-10-09T02:19:05+00:00 F10_K_r2 LATENCY_PCT_MS p50=9.718 p90=15.334 p99=17.895 p999=22.900 max=30.746 recall=9.577 @madvise_willneed:2285251 @major_faults:453025 @mincore:4673289 
+2026-10-09T02:19:08+00:00 F20_K_r2 arm=K mem=20G core_md5=d1f7a5d37a7f extra=[] unit=bo-F20_K_r2-5847
+2026-10-09T02:21:25+00:00 F20_K_r2 LATENCY_PCT_MS p50=4.139 p90=5.588 p99=6.725 p999=9.812 max=13.327 recall=4.143 @madvise_willneed:0 @major_faults:1 @mincore:72861 
+2026-10-09T02:21:28+00:00 F10_B_r2 arm=A mem=10G core_md5=63d53e5dfd14 extra=[-Dlucene.store.prefetchBackoff=false] unit=bo-F10_B_r2-8024
+2026-10-09T02:24:56+00:00 F10_B_r2 LATENCY_PCT_MS p50=9.671 p90=15.063 p99=17.080 p999=20.708 max=25.870 recall=9.456 @madvise_willneed:2281776 @major_faults:366641 @mincore:4710658 
+2026-10-09T02:24:59+00:00 F20_B_r2 arm=A mem=20G core_md5=63d53e5dfd14 extra=[-Dlucene.store.prefetchBackoff=false] unit=bo-F20_B_r2-10752
+2026-10-09T02:27:24+00:00 F20_B_r2 LATENCY_PCT_MS p50=5.042 p90=6.525 p99=7.628 p999=10.950 max=14.465 recall=5.048 @madvise_willneed:0 @major_faults:0 @mincore:4735500 
+2026-10-09T02:27:28+00:00 F10_A_r2 arm=A mem=10G core_md5=63d53e5dfd14 extra=[] unit=bo-F10_A_r2-12244
+2026-10-09T02:43:00+00:00 F10_A_r2 LATENCY_PCT_MS p50=46.660 p90=111.022 p99=172.394 p999=197.135 max=223.380 recall=50.943 @madvise_willneed:1071134 @major_faults:3841125 @mincore:1296384 
+2026-10-09T02:43:05+00:00 F20_A_r2 arm=A mem=20G core_md5=63d53e5dfd14 extra=[] unit=bo-F20_A_r2-23338
+2026-10-09T02:56:45+00:00 F20_A_r2 LATENCY_PCT_MS p50=43.018 p90=97.323 p99=132.177 p999=143.787 max=148.899 recall=44.087 @madvise_willneed:650261 @major_faults:1451107 @mincore:851304 

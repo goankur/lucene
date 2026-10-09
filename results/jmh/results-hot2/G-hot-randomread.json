@@ -1,0 +1,948 @@
+[
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapBatchedPrefetch_T01",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 63.47655798128968,
+            "scoreError" : 5.018213242837151,
+            "scoreConfidence" : [
+                58.45834473845253,
+                68.49477122412684
+            ],
+            "scorePercentiles" : {
+                "0.0" : 63.15988341333782,
+                "50.0" : 63.613710876350844,
+                "90.0" : 63.65607965418037,
+                "95.0" : 63.65607965418037,
+                "99.0" : 63.65607965418037,
+                "99.9" : 63.65607965418037,
+                "99.99" : 63.65607965418037,
+                "99.999" : 63.65607965418037,
+                "99.9999" : 63.65607965418037,
+                "100.0" : 63.65607965418037
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    63.15988341333782,
+                    63.65607965418037,
+                    63.613710876350844
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapBatchedPrefetch_T04",
+        "mode" : "thrpt",
+        "threads" : 4,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 135.19571927139893,
+            "scoreError" : 2.0186655480406426,
+            "scoreConfidence" : [
+                133.17705372335828,
+                137.21438481943957
+            ],
+            "scorePercentiles" : {
+                "0.0" : 135.0680230991383,
+                "50.0" : 135.25587148072378,
+                "90.0" : 135.26326323433474,
+                "95.0" : 135.26326323433474,
+                "99.0" : 135.26326323433474,
+                "99.9" : 135.26326323433474,
+                "99.99" : 135.26326323433474,
+                "99.999" : 135.26326323433474,
+                "99.9999" : 135.26326323433474,
+                "100.0" : 135.26326323433474
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    135.0680230991383,
+                    135.26326323433474,
+                    135.25587148072378
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapBatchedPrefetch_T08",
+        "mode" : "thrpt",
+        "threads" : 8,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 138.87276697876848,
+            "scoreError" : 2.6223460423083362,
+            "scoreConfidence" : [
+                136.25042093646016,
+                141.4951130210768
+            ],
+            "scorePercentiles" : {
+                "0.0" : 138.7895542652432,
+                "50.0" : 138.79000366083542,
+                "90.0" : 139.03874301022688,
+                "95.0" : 139.03874301022688,
+                "99.0" : 139.03874301022688,
+                "99.9" : 139.03874301022688,
+                "99.99" : 139.03874301022688,
+                "99.999" : 139.03874301022688,
+                "99.9999" : 139.03874301022688,
+                "100.0" : 139.03874301022688
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    139.03874301022688,
+                    138.7895542652432,
+                    138.79000366083542
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapBatchedPrefetch_T16",
+        "mode" : "thrpt",
+        "threads" : 16,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 139.44549057260647,
+            "scoreError" : 3.754110889478275,
+            "scoreConfidence" : [
+                135.6913796831282,
+                143.19960146208476
+            ],
+            "scorePercentiles" : {
+                "0.0" : 139.25888881800245,
+                "50.0" : 139.41140075429064,
+                "90.0" : 139.66618214552636,
+                "95.0" : 139.66618214552636,
+                "99.0" : 139.66618214552636,
+                "99.9" : 139.66618214552636,
+                "99.99" : 139.66618214552636,
+                "99.999" : 139.66618214552636,
+                "99.9999" : 139.66618214552636,
+                "100.0" : 139.66618214552636
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    139.66618214552636,
+                    139.41140075429064,
+                    139.25888881800245
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapRandomBatchedPrefetch_T01",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 64.56633695422947,
+            "scoreError" : 2.4238153194986083,
+            "scoreConfidence" : [
+                62.14252163473086,
+                66.99015227372809
+            ],
+            "scorePercentiles" : {
+                "0.0" : 64.46417931216538,
+                "50.0" : 64.5182998003049,
+                "90.0" : 64.71653175021812,
+                "95.0" : 64.71653175021812,
+                "99.0" : 64.71653175021812,
+                "99.9" : 64.71653175021812,
+                "99.99" : 64.71653175021812,
+                "99.999" : 64.71653175021812,
+                "99.9999" : 64.71653175021812,
+                "100.0" : 64.71653175021812
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    64.71653175021812,
+                    64.5182998003049,
+                    64.46417931216538
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapRandomBatchedPrefetch_T04",
+        "mode" : "thrpt",
+        "threads" : 4,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 134.95225406673535,
+            "scoreError" : 3.2758208900206993,
+            "scoreConfidence" : [
+                131.67643317671465,
+                138.22807495675605
+            ],
+            "scorePercentiles" : {
+                "0.0" : 134.7974570678292,
+                "50.0" : 134.9101963887191,
+                "90.0" : 135.14910874365776,
+                "95.0" : 135.14910874365776,
+                "99.0" : 135.14910874365776,
+                "99.9" : 135.14910874365776,
+                "99.99" : 135.14910874365776,
+                "99.999" : 135.14910874365776,
+                "99.9999" : 135.14910874365776,
+                "100.0" : 135.14910874365776
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    135.14910874365776,
+                    134.9101963887191,
+                    134.7974570678292
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapRandomBatchedPrefetch_T08",
+        "mode" : "thrpt",
+        "threads" : 8,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 137.5675789901078,
+            "scoreError" : 19.81945905948042,
+            "scoreConfidence" : [
+                117.74811993062737,
+                157.3870380495882
+            ],
+            "scorePercentiles" : {
+                "0.0" : 136.31407509675844,
+                "50.0" : 138.15251140338702,
+                "90.0" : 138.23615047017793,
+                "95.0" : 138.23615047017793,
+                "99.0" : 138.23615047017793,
+                "99.9" : 138.23615047017793,
+                "99.99" : 138.23615047017793,
+                "99.999" : 138.23615047017793,
+                "99.9999" : 138.23615047017793,
+                "100.0" : 138.23615047017793
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    138.15251140338702,
+                    136.31407509675844,
+                    138.23615047017793
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapRandomBatchedPrefetch_T16",
+        "mode" : "thrpt",
+        "threads" : 16,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 139.4314033061627,
+            "scoreError" : 3.1790753336737776,
+            "scoreConfidence" : [
+                136.25232797248893,
+                142.6104786398365
+            ],
+            "scorePercentiles" : {
+                "0.0" : 139.32899283860925,
+                "50.0" : 139.33261129967133,
+                "90.0" : 139.63260578020748,
+                "95.0" : 139.63260578020748,
+                "99.0" : 139.63260578020748,
+                "99.9" : 139.63260578020748,
+                "99.99" : 139.63260578020748,
+                "99.999" : 139.63260578020748,
+                "99.9999" : 139.63260578020748,
+                "100.0" : 139.63260578020748
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    139.63260578020748,
+                    139.32899283860925,
+                    139.33261129967133
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapRandom_T01",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 65.077300964158,
+            "scoreError" : 2.7500631383468948,
+            "scoreConfidence" : [
+                62.3272378258111,
+                67.82736410250489
+            ],
+            "scorePercentiles" : {
+                "0.0" : 64.96714328317137,
+                "50.0" : 65.01566826267288,
+                "90.0" : 65.24909134662974,
+                "95.0" : 65.24909134662974,
+                "99.0" : 65.24909134662974,
+                "99.9" : 65.24909134662974,
+                "99.99" : 65.24909134662974,
+                "99.999" : 65.24909134662974,
+                "99.9999" : 65.24909134662974,
+                "100.0" : 65.24909134662974
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    65.24909134662974,
+                    65.01566826267288,
+                    64.96714328317137
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapRandom_T04",
+        "mode" : "thrpt",
+        "threads" : 4,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 137.15943141803044,
+            "scoreError" : 4.4666506916288,
+            "scoreConfidence" : [
+                132.69278072640162,
+                141.62608210965925
+            ],
+            "scorePercentiles" : {
+                "0.0" : 137.01606133273208,
+                "50.0" : 137.02010326583704,
+                "90.0" : 137.44212965552217,
+                "95.0" : 137.44212965552217,
+                "99.0" : 137.44212965552217,
+                "99.9" : 137.44212965552217,
+                "99.99" : 137.44212965552217,
+                "99.999" : 137.44212965552217,
+                "99.9999" : 137.44212965552217,
+                "100.0" : 137.44212965552217
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    137.44212965552217,
+                    137.02010326583704,
+                    137.01606133273208
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapRandom_T08",
+        "mode" : "thrpt",
+        "threads" : 8,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 139.71505280384875,
+            "scoreError" : 2.699015510915641,
+            "scoreConfidence" : [
+                137.0160372929331,
+                142.4140683147644
+            ],
+            "scorePercentiles" : {
+                "0.0" : 139.619022210106,
+                "50.0" : 139.640714217138,
+                "90.0" : 139.8854219843023,
+                "95.0" : 139.8854219843023,
+                "99.0" : 139.8854219843023,
+                "99.9" : 139.8854219843023,
+                "99.99" : 139.8854219843023,
+                "99.999" : 139.8854219843023,
+                "99.9999" : 139.8854219843023,
+                "100.0" : 139.8854219843023
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    139.8854219843023,
+                    139.619022210106,
+                    139.640714217138
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmapRandom_T16",
+        "mode" : "thrpt",
+        "threads" : 16,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 140.59527074341523,
+            "scoreError" : 2.1195063310917095,
+            "scoreConfidence" : [
+                138.4757644123235,
+                142.71477707450694
+            ],
+            "scorePercentiles" : {
+                "0.0" : 140.50652826105795,
+                "50.0" : 140.55251711730054,
+                "90.0" : 140.72676685188722,
+                "95.0" : 140.72676685188722,
+                "99.0" : 140.72676685188722,
+                "99.9" : 140.72676685188722,
+                "99.99" : 140.72676685188722,
+                "99.999" : 140.72676685188722,
+                "99.9999" : 140.72676685188722,
+                "100.0" : 140.72676685188722
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    140.72676685188722,
+                    140.55251711730054,
+                    140.50652826105795
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmap_T01",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 67.51616602683129,
+            "scoreError" : 4.460991270287683,
+            "scoreConfidence" : [
+                63.0551747565436,
+                71.97715729711896
+            ],
+            "scorePercentiles" : {
+                "0.0" : 67.26726691460578,
+                "50.0" : 67.52516895095823,
+                "90.0" : 67.75606221492984,
+                "95.0" : 67.75606221492984,
+                "99.0" : 67.75606221492984,
+                "99.9" : 67.75606221492984,
+                "99.99" : 67.75606221492984,
+                "99.999" : 67.75606221492984,
+                "99.9999" : 67.75606221492984,
+                "100.0" : 67.75606221492984
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    67.75606221492984,
+                    67.26726691460578,
+                    67.52516895095823
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmap_T04",
+        "mode" : "thrpt",
+        "threads" : 4,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 137.53742333502944,
+            "scoreError" : 6.872519441934601,
+            "scoreConfidence" : [
+                130.66490389309484,
+                144.40994277696404
+            ],
+            "scorePercentiles" : {
+                "0.0" : 137.2735687114305,
+                "50.0" : 137.36986283531928,
+                "90.0" : 137.9688384583386,
+                "95.0" : 137.9688384583386,
+                "99.0" : 137.9688384583386,
+                "99.9" : 137.9688384583386,
+                "99.99" : 137.9688384583386,
+                "99.999" : 137.9688384583386,
+                "99.9999" : 137.9688384583386,
+                "100.0" : 137.9688384583386
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    137.9688384583386,
+                    137.2735687114305,
+                    137.36986283531928
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmap_T08",
+        "mode" : "thrpt",
+        "threads" : 8,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 139.6925201838483,
+            "scoreError" : 2.3935348175635918,
+            "scoreConfidence" : [
+                137.2989853662847,
+                142.0860550014119
+            ],
+            "scorePercentiles" : {
+                "0.0" : 139.6079823614966,
+                "50.0" : 139.62591825792845,
+                "90.0" : 139.84365993211983,
+                "95.0" : 139.84365993211983,
+                "99.0" : 139.84365993211983,
+                "99.9" : 139.84365993211983,
+                "99.99" : 139.84365993211983,
+                "99.999" : 139.84365993211983,
+                "99.9999" : 139.84365993211983,
+                "100.0" : 139.84365993211983
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    139.84365993211983,
+                    139.6079823614966,
+                    139.62591825792845
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "org.apache.lucene.benchmark.jmh.RandomReadIOBenchmark.mmap_T16",
+        "mode" : "thrpt",
+        "threads" : 16,
+        "forks" : 1,
+        "jvm" : "/home/goankur/jdk/amazon-corretto-25.0.4.8.1-linux-x64/bin/java",
+        "jvmArgs" : [
+            "--enable-native-access=ALL-UNNAMED",
+            "-Xms2g",
+            "-Xmx2g",
+            "-Dbench.file=/mnt/nvme/jmhdata/pread-bench-1024mb.dat",
+            "-Dbench.fileSizeMB=1024",
+            "-Dbench.dropPageCache=false"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+8-LTS",
+        "warmupIterations" : 2,
+        "warmupTime" : "3 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "5 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "readSize" : "16384",
+            "readsPerOp" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 140.53722078187192,
+            "scoreError" : 0.9290948553937173,
+            "scoreConfidence" : [
+                139.6081259264782,
+                141.46631563726564
+            ],
+            "scorePercentiles" : {
+                "0.0" : 140.48009039776667,
+                "50.0" : 140.55371821425854,
+                "90.0" : 140.57785373359062,
+                "95.0" : 140.57785373359062,
+                "99.0" : 140.57785373359062,
+                "99.9" : 140.57785373359062,
+                "99.99" : 140.57785373359062,
+                "99.999" : 140.57785373359062,
+                "99.9999" : 140.57785373359062,
+                "100.0" : 140.57785373359062
+            },
+            "scoreUnit" : "ops/ms",
+            "rawData" : [
+                [
+                    140.57785373359062,
+                    140.55371821425854,
+                    140.48009039776667
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+
