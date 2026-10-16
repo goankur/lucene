@@ -53,12 +53,18 @@ public class TestPrefetchBackoff extends LuceneTestCase {
 
   public void testStartsColdThenSamples() {
     PrefetchBackoff backoff = new PrefetchBackoff();
+    backoff.onMiss(); // inputs start confident; a miss is what makes them probe every call
     int seed = backoff.nextSeed();
     for (int i = 0; i < N; i++) {
       assertTrue("call " + i, backoff.shouldProbe(++seed));
       backoff.onHit();
     }
     assertSampling(backoff, seed);
+  }
+
+  public void testStartsSampling() {
+    PrefetchBackoff backoff = new PrefetchBackoff();
+    assertSampling(backoff, backoff.nextSeed());
   }
 
   public void testPreloadedStartsSampling() {

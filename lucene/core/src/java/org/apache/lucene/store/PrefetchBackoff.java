@@ -57,7 +57,7 @@ final class PrefetchBackoff {
 
   /** A preloaded file was touched page by page at open, so it starts in sampling mode. */
   PrefetchBackoff(boolean preloaded) {
-    consecutiveHits = new AtomicInteger(preloaded ? N : 0);
+    consecutiveHits = new AtomicInteger(N); // every input starts confident, preloaded or not
     inputs = new AtomicInteger();
   }
 

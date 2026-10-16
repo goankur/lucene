@@ -418,8 +418,7 @@ public class TestMMapDirectory extends BaseDirectoryTestCase {
     }
   }
 
-  // A preloaded file is resident at open, so its prefetch backoff starts in sampling mode instead
-  // of probing on every call.
+  // Every input, preloaded or not, starts in sampling mode; a miss moves it to probing every call.
   public void testPreloadedInputStartsSampling() throws IOException {
     final int size = 8 * 1024;
     try (MMapDirectory dir = new MMapDirectory(createTempDir("testPreloadedInputStartsSampling"))) {
@@ -428,10 +427,14 @@ public class TestMMapDirectory extends BaseDirectoryTestCase {
       }
       dir.setPreload(MMapDirectory.NO_FILES);
       try (var in = (MemorySegmentIndexInput) dir.openInput("test", IOContext.DEFAULT)) {
-        for (int i = 0; i < PrefetchBackoff.N; i++) {
-          assertTrue("call " + i, in.backoff.shouldProbe(++in.prefetchCalls));
-          in.backoff.onHit();
+        int calls = 1 << 16;
+        int probes = 0;
+        for (int i = 0; i < calls; i++) {
+          if (in.backoff.shouldProbe(++in.prefetchCalls)) {
+            probes++;
+          }
         }
+        assertTrue("expected sampling, got " + probes + " probes in " + calls, probes < calls / 16);
       }
       dir.setPreload(MMapDirectory.ALL_FILES);
       try (var in = (MemorySegmentIndexInput) dir.openInput("test", IOContext.DEFAULT)) {
