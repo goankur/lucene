@@ -1,0 +1,102 @@
+Attaching 3 probes...
+
+
+@mincore[1715892]: 404
+@mincore[1710483]: 404
+@mincore[1728069]: 404
+@mincore[1710901]: 404
+@mincore[1712145]: 404
+@mincore[1711707]: 405
+@mincore[1713149]: 405
+@mincore[1715470]: 405
+@mincore[1712718]: 405
+@mincore[1711315]: 406
+@mincore[1727202]: 406
+@mincore[1719519]: 406
+@mincore[1714843]: 406
+@mincore[1723797]: 406
+@mincore[1726685]: 406
+@mincore[1722742]: 406
+@mincore[1724778]: 406
+@mincore[1721338]: 407
+@mincore[1719103]: 407
+@mincore[1720403]: 407
+@mincore[1726220]: 407
+@mincore[1716310]: 407
+@mincore[1725701]: 407
+@mincore[1723212]: 407
+@mincore[1718590]: 407
+@mincore[1719999]: 407
+@mincore[1720910]: 407
+@mincore[1721933]: 407
+@mincore[1713576]: 407
+@mincore[1717698]: 407
+@mincore[1716719]: 407
+@mincore[1718181]: 408
+@mincore[1725293]: 408
+@mincore[1729493]: 408
+@mincore[1717219]: 408
+@mincore[1722330]: 408
+@mincore[1727610]: 408
+@mincore[1729078]: 408
+@mincore[1728561]: 408
+@mincore[1713990]: 408
+@mincore_ns: 
+[1K, 2K)              21 |                                                    |
+[2K, 4K)            4711 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                     |
+[4K, 8K)            7663 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[8K, 16K)           3511 |@@@@@@@@@@@@@@@@@@@@@@@                             |
+[16K, 32K)           226 |@                                                   |
+[32K, 64K)            59 |                                                    |
+[64K, 128K)            8 |                                                    |
+[128K, 256K)          10 |                                                    |
+[256K, 512K)           8 |                                                    |
+[512K, 1M)            10 |                                                    |
+[1M, 2M)               8 |                                                    |
+[2M, 4M)              15 |                                                    |
+[4M, 8M)               3 |                                                    |
+[8M, 16M)              3 |                                                    |
+[16M, 32M)             2 |                                                    |
+
+@mincore_tot_ns[1711315]: 2832389
+@mincore_tot_ns[1711707]: 2863356
+@mincore_tot_ns[1728069]: 2919900
+@mincore_tot_ns[1716719]: 2975632
+@mincore_tot_ns[1712145]: 3001904
+@mincore_tot_ns[1719999]: 3023524
+@mincore_tot_ns[1726220]: 3049219
+@mincore_tot_ns[1727202]: 3084169
+@mincore_tot_ns[1729493]: 3085007
+@mincore_tot_ns[1717219]: 3109056
+@mincore_tot_ns[1727610]: 3161610
+@mincore_tot_ns[1715470]: 3263980
+@mincore_tot_ns[1726685]: 3454738
+@mincore_tot_ns[1729078]: 3539413
+@mincore_tot_ns[1723212]: 3568698
+@mincore_tot_ns[1725701]: 3634162
+@mincore_tot_ns[1713149]: 3742362
+@mincore_tot_ns[1712718]: 3786422
+@mincore_tot_ns[1728561]: 3986390
+@mincore_tot_ns[1723797]: 3998053
+@mincore_tot_ns[1718181]: 4032555
+@mincore_tot_ns[1719519]: 4216564
+@mincore_tot_ns[1725293]: 4267071
+@mincore_tot_ns[1714843]: 4403329
+@mincore_tot_ns[1721933]: 4582232
+@mincore_tot_ns[1713576]: 5360719
+@mincore_tot_ns[1713990]: 5682447
+@mincore_tot_ns[1724778]: 6024783
+@mincore_tot_ns[1722330]: 6156170
+@mincore_tot_ns[1716310]: 6371858
+@mincore_tot_ns[1719103]: 6614545
+@mincore_tot_ns[1722742]: 8329565
+@mincore_tot_ns[1715892]: 9804847
+@mincore_tot_ns[1720910]: 9941613
+@mincore_tot_ns[1710483]: 11300922
+@mincore_tot_ns[1710901]: 13280999
+@mincore_tot_ns[1720403]: 14615018
+@mincore_tot_ns[1721338]: 15549319
+@mincore_tot_ns[1717698]: 17045180
+@mincore_tot_ns[1718590]: 55266886
+
+

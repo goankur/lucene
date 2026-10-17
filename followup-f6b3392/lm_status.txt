@@ -1,0 +1,15 @@
+2026-10-16T22:59:46+00:00 P0 build L, M
+2026-10-16T23:00:17+00:00 P0 arm L git=39c2734f6e core_md5=fa3e32e623a5 bytecode ok
+2026-10-16T23:00:48+00:00 P0 arm M git=eee8284ec3 core_md5=c01fb35dea2f bytecode ok
+2026-10-16T23:00:48+00:00 P1 25M rerank, cgroup 10G, 2 reps
+2026-10-16T23:14:45+00:00 P1 done
+2026-10-16T23:14:45+00:00 P2 wikimedium10m
+2026-10-16T23:14:50+00:00 P2 resident before GAA: 1.0001
+2026-10-16T23:24:54+00:00 P2 resident before GAL: 1.0001
+2026-10-16T23:33:07+00:00 P2 resident before GAM: 1.0001
+2026-10-16T23:41:20+00:00 P2 resident before GALc: 0.0000
+2026-10-16T23:50:14+00:00 P2 resident before GLAc: 0.0000
+2026-10-17T00:00:02+00:00 P2 resident before GAMc: 0.0000
+2026-10-17T00:08:26+00:00 P2 resident before GMAc: 0.0000
+2026-10-17T00:16:42+00:00 P2 done
+LM_DONE
