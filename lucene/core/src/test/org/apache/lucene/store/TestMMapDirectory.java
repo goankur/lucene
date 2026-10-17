@@ -428,10 +428,17 @@ public class TestMMapDirectory extends BaseDirectoryTestCase {
       }
       dir.setPreload(MMapDirectory.NO_FILES);
       try (var in = (MemorySegmentIndexInput) dir.openInput("test", IOContext.DEFAULT)) {
-        for (int i = 0; i < PrefetchBackoff.N; i++) {
-          assertTrue("call " + i, in.backoff.shouldProbe(++in.prefetchCalls));
-          in.backoff.onHit();
+        // the first call always probes; one hit is enough to start sampling
+        assertTrue(in.backoff.shouldProbe(++in.prefetchCalls));
+        in.backoff.onHit();
+        int calls = 1 << 16;
+        int probes = 0;
+        for (int i = 0; i < calls; i++) {
+          if (in.backoff.shouldProbe(++in.prefetchCalls)) {
+            probes++;
+          }
         }
+        assertTrue("expected sampling, got " + probes + " probes in " + calls, probes < calls / 16);
       }
       dir.setPreload(MMapDirectory.ALL_FILES);
       try (var in = (MemorySegmentIndexInput) dir.openInput("test", IOContext.DEFAULT)) {
