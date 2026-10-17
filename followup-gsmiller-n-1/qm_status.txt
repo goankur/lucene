@@ -1,0 +1,15 @@
+2026-10-17T00:41:13+00:00 P0 build Q (M already built)
+2026-10-17T00:41:47+00:00 P0 arm Q git=2a918aa5ca core_md5=45d20bc9ae27 bytecode ok
+2026-10-17T00:41:57+00:00 P0 arm M git=eee8284ec3 core_md5=c01fb35dea2f bytecode ok
+2026-10-17T00:41:57+00:00 P1 25M rerank, cgroup 10G, 2 reps
+2026-10-17T00:55:48+00:00 P1 done
+2026-10-17T00:55:48+00:00 P2 wikimedium10m
+2026-10-17T00:55:54+00:00 P2 resident before HAA: 1.0001
+2026-10-17T01:04:17+00:00 P2 resident before HAQ: 1.0001
+2026-10-17T01:12:45+00:00 P2 resident before HAM: 1.0001
+2026-10-17T01:21:16+00:00 P2 resident before HAQc: 0.0000
+2026-10-17T01:30:29+00:00 P2 resident before HQAc: 0.0000
+2026-10-17T01:40:38+00:00 P2 resident before HAMc: 0.0000
+2026-10-17T01:49:35+00:00 P2 resident before HMAc: 0.0000
+2026-10-17T01:58:02+00:00 P2 done
+QM_DONE
