@@ -1,0 +1,5 @@
+main        0f0e865b2d0b095f4b783fc10104990c3965e346 core_md5=baf21e5e5563e9bb5a22770c25850fb0  (same code as arm A; md5 differs only in the manifest's build-kernel line)
+pr-head     3afed7fcfa744c02917d39d56607db5aef6ed124 core_md5=701c9792f07f74103d2ec3c7dc7c3ccf  (PR head 8e90953 backoff, SKIP 64 default)
+fault-epoch 98e105624d5a09f0eee35355b0b674b3655c205f core_md5=c20aa18cc997159ab64e154b30a019ce  (pr-head + fault-epoch gate)
+Branch pr16145-eval/fault-epoch is 98e105624d + 3165331874, which only replaces Thread.sleep in the test (forbidden API) with a clock argument.
+Kernel 6.18.54 (G6 was rebooted after the 2026-10-17 runs, which used 6.18.51).

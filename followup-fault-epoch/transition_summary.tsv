@@ -1,0 +1,5 @@
+run	p50	p99	p999	mincore/s before drop	major faults 0-10 s after	major faults 0-30 s after	major faults/s from 30 s to end	seconds from drop to end	QPS before drop
+transition_fault-epoch_r1	4.694	16.770	27.883	0	13196	79116	1132	37	232.5
+transition_fault-epoch_r2	4.712	16.837	26.853	0	12287	66348	1012	37	231.5
+transition_pr-head_r1	4.730	17.036	28.382	1621	12354	52867	857	37	229.4
+transition_pr-head_r2	4.731	17.002	30.886	1634	13566	54029	897	37	229.8

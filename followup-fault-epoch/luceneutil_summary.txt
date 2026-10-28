@@ -1,0 +1,38 @@
+hot_main-vs-main	types=56	slower=0	faster=1	worst=
+hot_main-vs-pr-head	types=56	slower=4	faster=0	worst=Prefix3 -11.2%, range -5.2%, OrNotHighMed -3.4%, LowSloppyPhrase -2.1%
+hot_main-vs-fault-epoch	types=56	slower=0	faster=0	worst=
+cold_main-vs-fault-epoch	types=56	slower=1	faster=0	worst=OrHighLow -2.6%
+cold_fault-epoch-vs-main	types=56	slower=0	faster=0	worst=
+cold_main-vs-pr-head	types=56	slower=3	faster=0	worst=Prefix3 -7.2%, TermDTSort -5.5%, OrHighMed -3.7%
+cold_pr-head-vs-main	types=56	slower=0	faster=5	worst=
+
+pair	AndHighLow	LowTerm	OrHighLow	MedTerm	AndHighMed	OrHighMed	HighTermTitleSort	Prefix3	PKLookup	Wildcard
+hot_main-vs-main	-1.5(p0.466)	-0.5(p0.861)	2.8(p0.088)	1.7(p0.461)	-0.7(p0.761)	2.0(p0.320)	-1.4(p0.572)	-1.1(p0.635)	-1.2(p0.727)	0.3(p0.609)
+hot_main-vs-pr-head	-3.4(p0.125)	-1.3(p0.444)	1.2(p0.435)	0.8(p0.508)	-0.9(p0.681)	-2.3(p0.474)	-1.3(p0.594)	-11.2(p0.001)	1.2(p0.693)	0.3(p0.689)
+hot_main-vs-fault-epoch	-2.5(p0.209)	0.2(p0.908)	-0.6(p0.698)	0.9(p0.623)	1.5(p0.544)	-0.3(p0.929)	-3.0(p0.334)	-2.3(p0.412)	1.7(p0.580)	0.5(p0.812)
+cold_main-vs-fault-epoch	0.5(p0.846)	1.3(p0.396)	-2.6(p0.040)	0.8(p0.666)	-4.2(p0.188)	-1.9(p0.458)	-1.0(p0.712)	1.8(p0.675)	-0.1(p0.986)	-0.2(p0.739)
+cold_fault-epoch-vs-main	-0.1(p0.957)	0.4(p0.849)	-0.6(p0.774)	-1.7(p0.475)	-5.0(p0.156)	2.2(p0.574)	1.0(p0.771)	1.8(p0.559)	-6.1(p0.067)	-1.2(p0.220)
+cold_main-vs-pr-head	-3.0(p0.136)	-2.7(p0.174)	-2.3(p0.186)	-1.4(p0.483)	-1.7(p0.540)	-3.7(p0.041)	-0.9(p0.753)	-7.2(p0.000)	-3.7(p0.251)	-0.4(p0.762)
+cold_pr-head-vs-main	5.3(p0.028)	6.5(p0.007)	3.2(p0.050)	1.6(p0.473)	2.4(p0.402)	1.9(p0.533)	3.5(p0.294)	9.0(p0.025)	2.8(p0.413)	-0.8(p0.424)
+
+hot_main-vs-main arm=main jvms=40 mincore/jvm=397 (min 396 max 399) willneed/jvm=0
+hot_main-vs-pr-head arm=main jvms=20 mincore/jvm=407 (min 404 max 408) willneed/jvm=0
+hot_main-vs-pr-head arm=pr-head jvms=20 mincore/jvm=7602 (min 7568 max 7647) willneed/jvm=0
+hot_main-vs-fault-epoch arm=fault-epoch jvms=20 mincore/jvm=58 (min 55 max 60) willneed/jvm=0
+hot_main-vs-fault-epoch arm=main jvms=20 mincore/jvm=393 (min 391 max 395) willneed/jvm=0
+cold_main-vs-fault-epoch arm=fault-epoch jvms=20 mincore/jvm=2409 (min 56 max 47015) willneed/jvm=2635
+cold_main-vs-fault-epoch arm=main jvms=20 mincore/jvm=396 (min 394 max 398) willneed/jvm=0
+cold_fault-epoch-vs-main arm=fault-epoch jvms=20 mincore/jvm=268 (min 55 max 3139) willneed/jvm=7
+cold_fault-epoch-vs-main arm=main jvms=20 mincore/jvm=494 (min 391 max 2382) willneed/jvm=648
+cold_main-vs-pr-head arm=main jvms=20 mincore/jvm=415 (min 413 max 417) willneed/jvm=0
+cold_main-vs-pr-head arm=pr-head jvms=20 mincore/jvm=16618 (min 14207 max 60939) willneed/jvm=2089
+cold_pr-head-vs-main arm=main jvms=20 mincore/jvm=515 (min 407 max 2529) willneed/jvm=1506
+cold_pr-head-vs-main arm=pr-head jvms=20 mincore/jvm=9416 (min 9357 max 9470) willneed/jvm=0
+
+hot_main-vs-main first JVM (the cold one in cold pairs): lucene-main
+hot_main-vs-pr-head first JVM (the cold one in cold pairs): lucene-pr-head
+hot_main-vs-fault-epoch first JVM (the cold one in cold pairs): lucene-fault-epoch
+cold_main-vs-fault-epoch first JVM (the cold one in cold pairs): lucene-fault-epoch
+cold_fault-epoch-vs-main first JVM (the cold one in cold pairs): lucene-main
+cold_main-vs-pr-head first JVM (the cold one in cold pairs): lucene-pr-head
+cold_pr-head-vs-main first JVM (the cold one in cold pairs): lucene-main

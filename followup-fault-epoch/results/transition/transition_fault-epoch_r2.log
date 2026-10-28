@@ -1,0 +1,104 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Vector Dimensions: 1024
+numDocs = 25000000
+maxConn = 64
+beamWidth = 250
+similarity = DOT_PRODUCT
+numSearchThread = 16
+numQueryVectors = 10000
+Seed = 958473934434448
+index key = dot_product-idocs.vec-1788479472448-25000000-64-250-1-notfm
+Index Path = /mnt/nvme/indices/bbq1_25m_al
+Oct 28, 2026 9:22:27 PM org.apache.lucene.internal.vectorization.PanamaVectorizationProvider logIncubatorSetup
+INFO: Java vector incubator API enabled; uses preferredBitSize=256; FMA enabled
+retrieving previously saved indexing time in /mnt/nvme/indices/bbq1_25m_al/index-time-msec.txt
+read previously saved indexing time: 9335594 msec
+retrieving previously saved merge time in /mnt/nvme/indices/bbq1_25m_al/merge-time-msec.txt
+read previously saved merge time: 3872006 msec
+index has 31 segments: segments_2: _6k(11.0.0):C366680 _14j(11.0.0):C1116055 _a0(11.0.0):C407559 _gi(11.0.0):C745116 _2fs(11.0.0):C1200374 _332(11.0.0):C948865 _1az(11.0.0):C1147095 _lz(11.0.0):C641407 _x0(11.0.0):C775024 _333(11.0.0):C955606 _25l(11.0.0):C1190631 _1tb(11.0.0):C1035589 _30p(11.0.0):C1170636 _1jf(11.0.0):C1128798 _1fz(11.0.0):C883863 _1ac(11.0.0):C409631 _31p(11.0.0):C1212008 _1rf(11.0.0):C675406 _1nc(11.0.0):C313435 _1nq(11.0.0):C393247 _1zx(11.0.0):C1092622 _331(11.0.0):C1075772 _23n(11.0.0):C341552 _2c2(11.0.0):C1084059 _28l(11.0.0):C334866 _2hj(11.0.0):C638552 _2lr(11.0.0):C426927 _2nb(11.0.0):C957550 _2ty(11.0.0):C1008835 _2qu(11.0.0):C722591 _2xm(11.0.0):C599649
+  _6k: 1522.6 MB
+  _14j: 4645.3 MB
+  _a0: 1693.4 MB
+  _gi: 3098.2 MB
+  _2fs: 4999.4 MB
+  _332: 3949.0 MB
+  _1az: 4775.4 MB
+  _lz: 2667.2 MB
+  _x0: 3223.5 MB
+  _333: 3977.5 MB
+  _25l: 4955.5 MB
+  _1tb: 4310.7 MB
+  _30p: 4876.0 MB
+  _1jf: 4696.6 MB
+  _1fz: 3665.3 MB
+  _1ac: 1691.1 MB
+  _31p: 5045.4 MB
+  _1rf: 2808.9 MB
+  _1nc: 1301.3 MB
+  _1nq: 1634.1 MB
+  _1zx: 4545.6 MB
+  _331: 4478.6 MB
+  _23n: 1417.7 MB
+  _2c2: 4512.1 MB
+  _28l: 1389.9 MB
+  _2hj: 2654.9 MB
+  _2lr: 1773.2 MB
+  _2nb: 3986.0 MB
+  _2ty: 4196.9 MB
+  _2qu: 3002.1 MB
+  _2xm: 2491.8 MB
+encodingByteSize=4 origByteSize=4
+realEncodingByteSize=0.125
+index disk usage is 103985.13 MB
+vector disk usage is 101041.79 MB
+vector RAM usage is 3385.54 MB
+exact nn key = docs.vec-dot_product-idocs.vec-25000000-qqueries.vec-10000-dot_product-knn-100
+  read pre-cached exact match vectors from cache file "knn-reuse/exact-nn/docs.vec-dot_product-idocs.vec-25000000-qqueries.vec-10000-dot_product-knn-100.bin"
+  read pre-cached exact match scores from cache file "knn-reuse/exact-nn/docs.vec-dot_product-idocs.vec-25000000-qqueries.vec-10000-dot_product-knn-100.scores"
+EXACT_NN_SCORES_PATH: /home/goankur/vsearch/util/knn-reuse/exact-nn/docs.vec-dot_product-idocs.vec-25000000-qqueries.vec-10000-dot_product-knn-100.scores
+EXACT_NN_METRIC: dot_product
+path=/mnt/nvme/data/cohere-v3/queries.vec dim=1024 vectorEncoding.byteSize=4
+20000 query vectors in queryPath "/mnt/nvme/data/cohere-v3/queries.vec"
+searching 10000 query vectors; topK=500, fanout=500
+warmup recall=0.9674
+done warmup
+SEARCH_WINDOW_START 1793222627419
+SEARCH_PROGRESS 1000/10000 4s 268.2 qps eta=1min
+SEARCH_PROGRESS 2000/10000 8s 243.6 qps eta=1min
+SEARCH_PROGRESS 3000/10000 13s 235.8 qps eta=0min
+SEARCH_PROGRESS 4000/10000 17s 232.7 qps eta=0min
+SEARCH_PROGRESS 5000/10000 22s 231.5 qps eta=0min
+SEARCH_PROGRESS 6000/10000 31s 190.5 qps eta=0min
+SEARCH_PROGRESS 7000/10000 37s 187.7 qps eta=0min
+SEARCH_PROGRESS 8000/10000 44s 180.7 qps eta=0min
+SEARCH_PROGRESS 9000/10000 50s 179.4 qps eta=0min
+SEARCH_PROGRESS 10000/10000 58s 171.9 qps eta=0min
+SEARCH_WINDOW_END 1793222685602
+LATENCY_PCT_MS p50=4.712 p90=10.173 p99=16.837 p999=26.853 max=2465.757
+thread 3 name=main cpu@start=67803897146 cpu@end=117192769024 deltaMS=49388.871878
+thread 15 name=Reference Handler cpu@start=1114761 cpu@end=1164001 deltaMS=0.04924
+thread 16 name=Finalizer cpu@start=132910 cpu@end=132910 deltaMS=0.0
+thread 17 name=Signal Dispatcher cpu@start=92020 cpu@end=92020 deltaMS=0.0
+thread 32 name=Notification Thread cpu@start=90039 cpu@end=90039 deltaMS=0.0
+thread 33 name=Common-Cleaner cpu@start=204790 cpu@end=754929 deltaMS=0.550139
+thread 35 name=hnsw-search-1-thread-1 cpu@start=23256092470 cpu@end=46506671681 deltaMS=23250.579211
+thread 36 name=hnsw-search-1-thread-2 cpu@start=23260355105 cpu@end=46383711268 deltaMS=23123.356163
+thread 37 name=hnsw-search-1-thread-3 cpu@start=23296536463 cpu@end=46423026515 deltaMS=23126.490052
+thread 38 name=hnsw-search-1-thread-4 cpu@start=23230256031 cpu@end=46193117141 deltaMS=22962.86111
+thread 39 name=hnsw-search-1-thread-5 cpu@start=23337714637 cpu@end=46520620239 deltaMS=23182.905602
+thread 40 name=hnsw-search-1-thread-6 cpu@start=23328265135 cpu@end=46546098510 deltaMS=23217.833375
+thread 41 name=hnsw-search-1-thread-7 cpu@start=23343120733 cpu@end=46545129400 deltaMS=23202.008667
+thread 42 name=hnsw-search-1-thread-8 cpu@start=23164861912 cpu@end=46224906536 deltaMS=23060.044624
+thread 43 name=hnsw-search-1-thread-9 cpu@start=23221063421 cpu@end=46375601255 deltaMS=23154.537834
+thread 44 name=hnsw-search-1-thread-10 cpu@start=23278698400 cpu@end=46333856671 deltaMS=23055.158271
+thread 45 name=hnsw-search-1-thread-11 cpu@start=23194733774 cpu@end=46387565185 deltaMS=23192.831411
+thread 46 name=hnsw-search-1-thread-12 cpu@start=23174960798 cpu@end=46251352797 deltaMS=23076.391999
+thread 47 name=hnsw-search-1-thread-13 cpu@start=23264894758 cpu@end=46410627251 deltaMS=23145.732493
+thread 48 name=hnsw-search-1-thread-14 cpu@start=23287106083 cpu@end=46311224465 deltaMS=23024.118382
+thread 49 name=hnsw-search-1-thread-15 cpu@start=23255729273 cpu@end=46356842108 deltaMS=23101.112835
+thread 50 name=hnsw-search-1-thread-16 cpu@start=23383853079 cpu@end=46513418762 deltaMS=23129.565683
+
+Average CPU cores used: 7.209743342214342
+completed 10000 searches in 58170 ms: 171 QPS CPU time=419390 ms
+checking results
+SUMMARY: 0.967	5.817	41.939	7.210	25000000	KNN	100	100	N/A	N/A	100.000	64	250	1 bits	140516	9335.59	2677.92	3872.01	0.00	31	103985.13	null	N/A	5.000	101041.794	3385.544	false	HNSW	32 bits

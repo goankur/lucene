@@ -1,0 +1,19 @@
+2026-10-28T21:15:46+00:00 step 1: build main, pr-head, fault-epoch (core + JMH benchmarks)
+2026-10-28T21:16:21+00:00   main: git 0f0e865b2d0, lucene-core md5 baf21e5e5563, bytecode check ok
+2026-10-28T21:16:53+00:00   pr-head: git 3afed7fcfa7, lucene-core md5 701c9792f07f, bytecode check ok
+2026-10-28T21:17:24+00:00   fault-epoch: git 98e105624d5, lucene-core md5 c20aa18cc997, bytecode check ok
+2026-10-28T21:17:24+00:00 step 2: eviction transition on the 25M rerank (20 GB cgroup, dropped to 10 GB at timed query 5000)
+2026-10-28T21:27:20+00:00 step 3: luceneutil wikimedium10m (20 JVMs per side)
+2026-10-28T21:27:25+00:00   resident before hot_main-vs-main: 1.0001
+2026-10-28T21:35:42+00:00   resident before hot_main-vs-pr-head: 1.0001
+2026-10-28T21:43:46+00:00   resident before hot_main-vs-fault-epoch: 1.0001
+2026-10-28T21:52:10+00:00   resident before cold_main-vs-fault-epoch: 0.0000
+2026-10-28T22:00:36+00:00   resident before cold_fault-epoch-vs-main: 0.0000
+2026-10-28T22:09:16+00:00   resident before cold_main-vs-pr-head: 0.0000
+2026-10-28T22:17:41+00:00   resident before cold_pr-head-vs-main: 0.0000
+2026-10-28T22:25:54+00:00 step 4: JMH StoredFieldsPrefetchBenchmark, hot (kit from michaeljmarshall e7138cc4, -f 1)
+2026-10-28T22:28:44+00:00   JMH main done
+2026-10-28T22:31:33+00:00   JMH pr-head done
+2026-10-28T22:34:23+00:00   JMH fault-epoch done
+2026-10-28T22:34:23+00:00 all done
+FE_DONE

@@ -1,0 +1,12 @@
+2026-10-28T21:17:31+00:00 transition_pr-head_r1 arm=pr-head core_md5=701c9792f07f extra=[] unit=bo-transition_pr-head_r1-4112103
+2026-10-28T21:19:18+00:00 transition_pr-head_r1 SHRINK to 10G at SEARCH_PROGRESS 5000/10000 22s 229.4 qps eta=0min bpf_elapsed_line=24
+2026-10-28T21:19:56+00:00 transition_pr-head_r1 LATENCY_PCT_MS p50=4.730 p90=10.008 p99=17.036 p999=28.382 max=2475.688 warmup recall=0.9674
+2026-10-28T21:19:59+00:00 transition_fault-epoch_r1 arm=fault-epoch core_md5=c20aa18cc997 extra=[] unit=bo-transition_fault-epoch_r1-4114698
+2026-10-28T21:21:45+00:00 transition_fault-epoch_r1 SHRINK to 10G at SEARCH_PROGRESS 5000/10000 22s 232.5 qps eta=0min bpf_elapsed_line=24
+2026-10-28T21:22:23+00:00 transition_fault-epoch_r1 LATENCY_PCT_MS p50=4.694 p90=10.136 p99=16.770 p999=27.883 max=2423.455 warmup recall=0.9674
+2026-10-28T21:22:26+00:00 transition_fault-epoch_r2 arm=fault-epoch core_md5=c20aa18cc997 extra=[] unit=bo-transition_fault-epoch_r2-4116621
+2026-10-28T21:24:13+00:00 transition_fault-epoch_r2 SHRINK to 10G at SEARCH_PROGRESS 5000/10000 22s 231.5 qps eta=0min bpf_elapsed_line=24
+2026-10-28T21:24:52+00:00 transition_fault-epoch_r2 LATENCY_PCT_MS p50=4.712 p90=10.173 p99=16.837 p999=26.853 max=2465.757 warmup recall=0.9674
+2026-10-28T21:24:54+00:00 transition_pr-head_r2 arm=pr-head core_md5=701c9792f07f extra=[] unit=bo-transition_pr-head_r2-4119152
+2026-10-28T21:26:41+00:00 transition_pr-head_r2 SHRINK to 10G at SEARCH_PROGRESS 5000/10000 22s 229.8 qps eta=0min bpf_elapsed_line=24
+2026-10-28T21:27:20+00:00 transition_pr-head_r2 LATENCY_PCT_MS p50=4.731 p90=10.207 p99=17.002 p999=30.886 max=2510.303 warmup recall=0.9674

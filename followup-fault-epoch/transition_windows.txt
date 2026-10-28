@@ -1,0 +1,24 @@
+pr-head_r1
+  s 0- 5  majflt/s   2336  willneed/s   32906  mincore/s   58288
+  s 5-10  majflt/s    135  willneed/s   11973  mincore/s   89866
+  s10-20  majflt/s   2593  willneed/s   16824  mincore/s   69770
+  s20-30  majflt/s   1458  willneed/s   16913  mincore/s   71572
+  s30-37  majflt/s    857  willneed/s    5339  mincore/s   19025
+pr-head_r2
+  s 0- 5  majflt/s   2581  willneed/s   34215  mincore/s   52977
+  s 5-10  majflt/s    133  willneed/s   12898  mincore/s   88809
+  s10-20  majflt/s   2661  willneed/s   16833  mincore/s   69128
+  s20-30  majflt/s   1385  willneed/s   16723  mincore/s   72893
+  s30-37  majflt/s    897  willneed/s    6022  mincore/s   25368
+fault-epoch_r1
+  s 0- 5  majflt/s   2515  willneed/s   33773  mincore/s   56385
+  s 5-10  majflt/s    124  willneed/s   12344  mincore/s   90441
+  s10-20  majflt/s   4110  willneed/s   16951  mincore/s   68837
+  s20-30  majflt/s   2482  willneed/s   16659  mincore/s   72634
+  s30-37  majflt/s   1132  willneed/s    5599  mincore/s   21877
+fault-epoch_r2
+  s 0- 5  majflt/s   2331  willneed/s   33183  mincore/s   57977
+  s 5-10  majflt/s    127  willneed/s   12019  mincore/s   89807
+  s10-20  majflt/s   3475  willneed/s   16919  mincore/s   69051
+  s20-30  majflt/s   1931  willneed/s   16709  mincore/s   73642
+  s30-37  majflt/s   1012  willneed/s    5488  mincore/s   33592
