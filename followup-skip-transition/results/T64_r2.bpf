@@ -1,0 +1,67 @@
+Attaching 5 probes...
+SEC 1 majflt=0 willneed=0 mincore=2848
+SEC 2 majflt=0 willneed=0 mincore=1833
+SEC 3 majflt=0 willneed=0 mincore=1852
+SEC 4 majflt=0 willneed=0 mincore=1660
+SEC 5 majflt=0 willneed=0 mincore=1598
+SEC 6 majflt=0 willneed=0 mincore=1707
+SEC 7 majflt=0 willneed=0 mincore=1739
+SEC 8 majflt=0 willneed=0 mincore=1598
+SEC 9 majflt=0 willneed=0 mincore=1744
+SEC 10 majflt=0 willneed=0 mincore=1780
+SEC 11 majflt=0 willneed=0 mincore=1762
+SEC 12 majflt=0 willneed=0 mincore=1580
+SEC 13 majflt=0 willneed=0 mincore=1777
+SEC 14 majflt=0 willneed=0 mincore=1653
+SEC 15 majflt=0 willneed=0 mincore=1941
+SEC 16 majflt=0 willneed=0 mincore=1812
+SEC 17 majflt=0 willneed=0 mincore=1743
+SEC 18 majflt=0 willneed=0 mincore=1719
+SEC 19 majflt=0 willneed=0 mincore=1793
+SEC 20 majflt=0 willneed=0 mincore=1678
+SEC 21 majflt=0 willneed=0 mincore=1615
+SEC 22 majflt=0 willneed=0 mincore=359
+SEC 23 majflt=0 willneed=0 mincore=0
+SEC 24 majflt=2277 willneed=965 mincore=1002
+SEC 25 majflt=9567 willneed=25200 mincore=28494
+SEC 26 majflt=3921 willneed=38326 mincore=47612
+SEC 27 majflt=1314 willneed=41180 mincore=48210
+SEC 28 majflt=458 willneed=35900 mincore=54638
+SEC 29 majflt=214 willneed=33149 mincore=63539
+SEC 30 majflt=114 willneed=20925 mincore=83221
+SEC 31 majflt=103 willneed=22312 mincore=77321
+SEC 32 majflt=116 willneed=12056 mincore=84956
+SEC 33 majflt=96 willneed=8292 mincore=94500
+SEC 34 majflt=513 willneed=7730 mincore=87500
+SEC 35 majflt=852 willneed=8259 mincore=88549
+SEC 36 majflt=1936 willneed=11347 mincore=73500
+SEC 37 majflt=1908 willneed=9557 mincore=80596
+SEC 38 majflt=2256 willneed=9235 mincore=78000
+SEC 39 majflt=3369 willneed=12215 mincore=72463
+SEC 40 majflt=1663 willneed=6703 mincore=93437
+SEC 41 majflt=1842 willneed=4585 mincore=85857
+SEC 42 majflt=7381 willneed=23630 mincore=45784
+SEC 43 majflt=4702 willneed=34486 mincore=46299
+SEC 44 majflt=2079 willneed=32139 mincore=48200
+SEC 45 majflt=916 willneed=26043 mincore=68523
+SEC 46 majflt=123 willneed=2528 mincore=102592
+SEC 47 majflt=219 willneed=3431 mincore=92073
+SEC 48 majflt=388 willneed=9987 mincore=84707
+SEC 49 majflt=465 willneed=19939 mincore=78000
+SEC 50 majflt=1036 willneed=22030 mincore=63558
+SEC 51 majflt=1370 willneed=21731 mincore=45500
+SEC 52 majflt=3349 willneed=30891 mincore=38128
+SEC 53 majflt=6226 willneed=31570 mincore=38871
+SEC 54 majflt=3823 willneed=19423 mincore=74500
+SEC 55 majflt=949 willneed=5555 mincore=97500
+SEC 56 majflt=1815 willneed=12763 mincore=82703
+SEC 57 majflt=2903 willneed=22566 mincore=56106
+SEC 58 majflt=1484 willneed=3378 mincore=13035
+SEC 59 majflt=0 willneed=0 mincore=0
+SEC 60 majflt=0 willneed=0 mincore=0
+SEC 61 majflt=58 willneed=0 mincore=0
+
+
+@f: 0
+@m: 0
+@w: 0
