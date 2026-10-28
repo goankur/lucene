@@ -84,20 +84,23 @@ public class TestPrefetchBackoff extends LuceneTestCase {
     assertFalse(backoff.shouldProbe(noCheck(N), faults));
   }
 
-  public void testMajorFaultsAdvanceTheEpoch() throws Exception {
+  public void testMajorFaultsAdvanceTheEpoch() {
     PrefetchBackoff backoff = new PrefetchBackoff();
     assertTrue(backoff.shouldProbe(noCheck(0), faults));
     backoff.onHit();
-    // let any earlier refresh go stale, then report a new fault
-    Thread.sleep(2 * PrefetchBackoff.REFRESH_NANOS / 1_000_000 + 1);
+    // pass the clock explicitly, far enough apart that each call refreshes
+    long now = System.nanoTime() + 1_000 * PrefetchBackoff.REFRESH_NANOS;
     faults.faults += 1;
-    PrefetchBackoff.maybeRefreshEpoch(faults);
+    PrefetchBackoff.maybeRefreshEpoch(faults, now);
     assertTrue(backoff.shouldProbe(noCheck(1), faults));
     backoff.onHit();
     // no new faults: the next refresh leaves the epoch alone
-    Thread.sleep(2 * PrefetchBackoff.REFRESH_NANOS / 1_000_000 + 1);
-    PrefetchBackoff.maybeRefreshEpoch(faults);
+    PrefetchBackoff.maybeRefreshEpoch(faults, now + 2 * PrefetchBackoff.REFRESH_NANOS);
     assertFalse(backoff.shouldProbe(noCheck(2), faults));
+    // too soon after the last refresh: a new fault is not looked at yet
+    faults.faults += 1;
+    PrefetchBackoff.maybeRefreshEpoch(faults, now + 2 * PrefetchBackoff.REFRESH_NANOS + 1);
+    assertFalse(backoff.shouldProbe(noCheck(3), faults));
   }
 
   public void testCountersStartSpreadAcrossClones() {

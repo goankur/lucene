@@ -97,7 +97,11 @@ final class PrefetchBackoff {
 
   /** Reads the major fault count at most once per {@link #REFRESH_NANOS}, across all threads. */
   static void maybeRefreshEpoch(NativeAccess nativeAccess) {
-    final long now = System.nanoTime();
+    maybeRefreshEpoch(nativeAccess, System.nanoTime());
+  }
+
+  // package-private so tests can pass the clock instead of sleeping
+  static void maybeRefreshEpoch(NativeAccess nativeAccess, long now) {
     final long last = LAST_REFRESH_NANOS.get();
     if (now - last < REFRESH_NANOS || LAST_REFRESH_NANOS.compareAndSet(last, now) == false) {
       return;
