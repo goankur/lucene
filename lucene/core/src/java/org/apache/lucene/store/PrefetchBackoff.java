@@ -46,7 +46,7 @@ final class PrefetchBackoff {
   // Every SKIPth call probes when the file looks warm, so an eviction costs at most SKIP - 1
   // unprefetched reads before a sample notices it. On fully cached files, this is assumed to be
   // noise. Must be a power of two.
-  static final int SKIP = 64;
+  static final int SKIP = Integer.getInteger("bo.SKIP", 64); // measurement only
 
   private final AtomicInteger consecutiveHits;
   private final AtomicInteger inputs;
@@ -57,14 +57,14 @@ final class PrefetchBackoff {
 
   /** A preloaded file was touched page by page at open, so it starts in sampling mode. */
   PrefetchBackoff(boolean preloaded) {
-    consecutiveHits =
-        new AtomicInteger(preloaded ? N : N - 1); // probe the first call; a hit means sampling
+    consecutiveHits = new AtomicInteger(N - 1); // as in 8e90953: every input probes its first call
     inputs = new AtomicInteger();
   }
 
   /** Initial value for a new input's call counter, see {@link #shouldProbe}. Once per input. */
   int nextSeed() {
-    return inputs.incrementAndGet();
+    return (inputs.incrementAndGet() * 0x9E3779B9)
+        >>> Integer.numberOfLeadingZeros(SKIP - 1); // as in 8e90953
   }
 
   /** {@code calls} is the input's own call count, starting from {@link #nextSeed()}. */
