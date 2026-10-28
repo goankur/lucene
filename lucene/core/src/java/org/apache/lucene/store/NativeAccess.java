@@ -35,6 +35,12 @@ abstract class NativeAccess {
   public abstract int getPageSize();
 
   /**
+   * Returns this process's major page fault count ({@code getrusage(RUSAGE_SELF).ru_majflt}), or
+   * {@code -1} if it is not available.
+   */
+  public abstract long majorFaults();
+
+  /**
    * Return the NativeAccess instance for this platform. At the moment we only support Linux and
    * MacOS.
    */

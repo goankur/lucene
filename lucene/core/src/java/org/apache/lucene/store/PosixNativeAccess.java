@@ -17,6 +17,7 @@
 package org.apache.lucene.store;
 
 import java.io.IOException;
+import java.lang.foreign.Arena;
 import java.lang.foreign.FunctionDescriptor;
 import java.lang.foreign.Linker;
 import java.lang.foreign.MemorySegment;
@@ -49,7 +50,14 @@ final class PosixNativeAccess extends NativeAccess {
   public static final int POSIX_MADV_DONTNEED = 4;
 
   private static final MethodHandle MH$posix_madvise;
+  private static final MethodHandle MH$getrusage;
   private static final int PAGE_SIZE;
+
+  private static final int RUSAGE_SELF = 0;
+  // struct rusage on 64-bit Linux and macOS: two struct timeval (16 bytes each), then 14 longs;
+  // ru_majflt is the sixth long
+  private static final long RUSAGE_SIZE = 144;
+  private static final long RU_MAJFLT_OFFSET = 72;
 
   private static final Optional<NativeAccess> INSTANCE;
 
@@ -61,6 +69,7 @@ final class PosixNativeAccess extends NativeAccess {
 
   static {
     MethodHandle adviseHandle = null;
+    MethodHandle getrusageHandle = null;
     int pagesize = -1;
     PosixNativeAccess instance = null;
     if (ValueLayout.ADDRESS.byteSize() == Long.BYTES) {
@@ -70,6 +79,11 @@ final class PosixNativeAccess extends NativeAccess {
         final SymbolLookup stdlib = linker.defaultLookup();
         adviseHandle = lookupMadvise(linker, stdlib);
         pagesize = (int) lookupGetPageSize(linker, stdlib).invokeExact();
+        try {
+          getrusageHandle = lookupGetrusage(linker, stdlib);
+        } catch (UnsupportedOperationException _) {
+          // no fault counter: prefetch falls back to probing once per refresh interval
+        }
         instance = new PosixNativeAccess();
       } catch (UnsupportedOperationException uoe) {
         LOG.warning("Cannot initialize native function bindings: " + uoe.getMessage());
@@ -92,6 +106,7 @@ final class PosixNativeAccess extends NativeAccess {
       }
     }
     MH$posix_madvise = adviseHandle;
+    MH$getrusage = getrusageHandle;
     PAGE_SIZE = pagesize;
     INSTANCE = Optional.ofNullable(instance);
   }
@@ -106,6 +121,14 @@ final class PosixNativeAccess extends NativeAccess {
             ValueLayout.ADDRESS,
             ValueLayout.JAVA_LONG,
             ValueLayout.JAVA_INT));
+  }
+
+  private static MethodHandle lookupGetrusage(Linker linker, SymbolLookup stdlib) {
+    return findFunction(
+        linker,
+        stdlib,
+        "getrusage",
+        FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS));
   }
 
   private static MethodHandle lookupGetPageSize(Linker linker, SymbolLookup stdlib) {
@@ -169,5 +192,19 @@ final class PosixNativeAccess extends NativeAccess {
   @Override
   public int getPageSize() {
     return PAGE_SIZE;
+  }
+
+  @Override
+  public long majorFaults() {
+    if (MH$getrusage == null) {
+      return -1;
+    }
+    try (Arena arena = Arena.ofConfined()) {
+      final MemorySegment usage = arena.allocate(RUSAGE_SIZE, Long.BYTES);
+      final int ret = (int) MH$getrusage.invokeExact(RUSAGE_SELF, usage);
+      return ret == 0 ? usage.get(ValueLayout.JAVA_LONG, RU_MAJFLT_OFFSET) : -1;
+    } catch (Throwable th) {
+      throw new AssertionError(th);
+    }
   }
 }

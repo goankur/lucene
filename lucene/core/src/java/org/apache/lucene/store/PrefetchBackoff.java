@@ -17,59 +17,63 @@
 package org.apache.lucene.store;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Decides whether {@link MemorySegmentIndexInput#prefetch} should check the page cache before
  * calling madvise. One instance is shared by all clones and slices of an input.
  *
- * <p>Probe on every call until {@link #N} consecutive hits, then every {@link #SKIP}th call; a miss
- * goes back to probing on every call. Files start cold unless preloaded: a wrong warm guess costs
- * up to SKIP unprefetched reads with no feedback, a wrong cold guess costs N cheap probes. While
- * sampling, an eviction goes unnoticed for at most SKIP - 1 reads.
- *
- * <p>Each input counts its own calls, seeded from a sequence number taken when it is created, so
- * consecutive clones sample at different offsets and short-lived clones still sample collectively,
- * though possibly at a lower frequency if clones sample fewer than {@link #SKIP} times per
- * instance.
+ * <p>Probe on every call until {@link #N} consecutive hits. After that, probe again only when the
+ * process has taken a major page fault since this file's last successful probe: a hot index takes
+ * no major faults, so it never probes, and the first read of an evicted page is itself a major
+ * fault, so every file probes on its next call after an eviction starts. A miss goes back to
+ * probing on every call.
  */
 final class PrefetchBackoff {
 
   // A probe (mincore) costs about a microsecond. A page cache miss costs tens of microseconds on a
-  // fast local NVMe and a few hundred on network storage like EBS, more under contention; see
-  // https://github.com/apache/lucene/pull/16145 for measurements. Skipping a probe pays off once
-  // the miss rate is below the ratio of the two costs, and we size for the slow end, roughly
-  // 1/300, since an extra probe is cheap and a missed prefetch is not. After n hits without a
-  // miss, the miss rate is very likely below 3/n (the "rule of three": (1-p)^n drops under 5% once
-  // p > 3/n), so it takes on the order of a thousand hits to be confident enough to skip.
+  // fast local NVMe and a few hundred on network storage. After n hits without a miss, the miss
+  // rate is very likely below 3/n (the "rule of three"), so it takes on the order of a thousand
+  // hits to be confident enough to stop probing.
   static final int N = 1024;
 
-  // Every SKIPth call probes when the file looks warm, so an eviction costs at most SKIP - 1
-  // unprefetched reads before a sample notices it. On fully cached files, this is assumed to be
-  // noise. Must be a power of two.
-  static final int SKIP = Integer.getInteger("bo.SKIP", 64); // measurement only
+  // How often the process-wide major fault count is read: callers look at the clock once every
+  // CHECK_EVERY calls, and getrusage runs at most once per REFRESH_NANOS.
+  static final int CHECK_EVERY = 64;
+  static final long REFRESH_NANOS = 1_000_000;
+
+  // Bumped whenever the process's major fault count has grown since the last refresh.
+  private static final AtomicLong FAULT_EPOCH = new AtomicLong();
+  private static final AtomicLong LAST_REFRESH_NANOS = new AtomicLong(System.nanoTime());
+  private static volatile long lastMajorFaults = -1;
 
   private final AtomicInteger consecutiveHits;
   private final AtomicInteger inputs;
+  // The fault epoch in which this file's last probe hit. Racy on purpose, like the counter.
+  private volatile long confirmedEpoch = -1;
 
   PrefetchBackoff() {
     this(false);
   }
 
-  /** A preloaded file was touched page by page at open, so it starts in sampling mode. */
+  /** Every input probes its first call, preloaded or not. */
   PrefetchBackoff(boolean preloaded) {
-    consecutiveHits = new AtomicInteger(N - 1); // as in 8e90953: every input probes its first call
+    consecutiveHits = new AtomicInteger(N - 1);
     inputs = new AtomicInteger();
   }
 
-  /** Initial value for a new input's call counter, see {@link #shouldProbe}. Once per input. */
+  /** Initial value for a new input's call counter; spreads the clock checks across clones. */
   int nextSeed() {
     return (inputs.incrementAndGet() * 0x9E3779B9)
-        >>> Integer.numberOfLeadingZeros(SKIP - 1); // as in 8e90953
+        >>> Integer.numberOfLeadingZeros(CHECK_EVERY - 1);
   }
 
   /** {@code calls} is the input's own call count, starting from {@link #nextSeed()}. */
-  boolean shouldProbe(int calls) {
-    return consecutiveHits.get() < N || (calls & (SKIP - 1)) == 0;
+  boolean shouldProbe(int calls, NativeAccess nativeAccess) {
+    if ((calls & (CHECK_EVERY - 1)) == 0) {
+      maybeRefreshEpoch(nativeAccess);
+    }
+    return consecutiveHits.get() < N || confirmedEpoch != FAULT_EPOCH.get();
   }
 
   // Both updates are racy on purpose. A lost increment or a repeated reset is harmless, and the
@@ -79,11 +83,35 @@ final class PrefetchBackoff {
     if (consecutiveHits.get() < N) {
       consecutiveHits.incrementAndGet();
     }
+    final long epoch = FAULT_EPOCH.get();
+    if (confirmedEpoch != epoch) {
+      confirmedEpoch = epoch;
+    }
   }
 
   void onMiss() {
     if (consecutiveHits.get() != 0) {
       consecutiveHits.set(0);
     }
+  }
+
+  /** Reads the major fault count at most once per {@link #REFRESH_NANOS}, across all threads. */
+  static void maybeRefreshEpoch(NativeAccess nativeAccess) {
+    final long now = System.nanoTime();
+    final long last = LAST_REFRESH_NANOS.get();
+    if (now - last < REFRESH_NANOS || LAST_REFRESH_NANOS.compareAndSet(last, now) == false) {
+      return;
+    }
+    final long faults = nativeAccess.majorFaults();
+    if (faults < 0 || faults != lastMajorFaults) {
+      // no counter means no signal: treat every refresh as a possible eviction
+      lastMajorFaults = faults;
+      FAULT_EPOCH.incrementAndGet();
+    }
+  }
+
+  /** Simulates a major fault; for tests. */
+  static void advanceEpochForTesting() {
+    FAULT_EPOCH.incrementAndGet();
   }
 }

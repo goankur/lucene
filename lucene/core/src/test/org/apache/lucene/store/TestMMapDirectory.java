@@ -418,64 +418,6 @@ public class TestMMapDirectory extends BaseDirectoryTestCase {
     }
   }
 
-  // A preloaded file is resident at open, so its prefetch backoff starts in sampling mode instead
-  // of probing on every call.
-  public void testPreloadedInputStartsSampling() throws IOException {
-    final int size = 8 * 1024;
-    try (MMapDirectory dir = new MMapDirectory(createTempDir("testPreloadedInputStartsSampling"))) {
-      try (IndexOutput out = dir.createOutput("test", IOContext.DEFAULT)) {
-        out.writeBytes(new byte[size], 0, size);
-      }
-      dir.setPreload(MMapDirectory.NO_FILES);
-      try (var in = (MemorySegmentIndexInput) dir.openInput("test", IOContext.DEFAULT)) {
-        // the first call always probes; one hit is enough to start sampling
-        assertTrue(in.backoff.shouldProbe(++in.prefetchCalls));
-        in.backoff.onHit();
-        int calls = 1 << 16;
-        int probes = 0;
-        for (int i = 0; i < calls; i++) {
-          if (in.backoff.shouldProbe(++in.prefetchCalls)) {
-            probes++;
-          }
-        }
-        assertTrue("expected sampling, got " + probes + " probes in " + calls, probes < calls / 16);
-      }
-      dir.setPreload(MMapDirectory.ALL_FILES);
-      try (var in = (MemorySegmentIndexInput) dir.openInput("test", IOContext.DEFAULT)) {
-        int calls = 1 << 16;
-        int probes = 0;
-        for (int i = 0; i < calls; i++) {
-          if (in.backoff.shouldProbe(++in.prefetchCalls)) {
-            probes++;
-          }
-        }
-        assertTrue("expected sampling, got " + probes + " probes in " + calls, probes < calls / 16);
-      }
-    }
-  }
-
-  // Each input seeds its call counter from a shared sequence, so among SKIP consecutive clones of
-  // a warm input exactly one samples on its first prefetch call.
-  public void testClonesSampleAtDifferentOffsets() throws IOException {
-    try (MMapDirectory dir =
-        new MMapDirectory(createTempDir("testClonesSampleAtDifferentOffsets"))) {
-      try (IndexOutput out = dir.createOutput("test", IOContext.DEFAULT)) {
-        out.writeBytes(new byte[64], 0, 64);
-      }
-      dir.setPreload(MMapDirectory.ALL_FILES); // warm from the first call
-      try (var in = (MemorySegmentIndexInput) dir.openInput("test", IOContext.DEFAULT)) {
-        int firstCallProbes = 0;
-        for (int i = 0; i < PrefetchBackoff.SKIP; i++) {
-          MemorySegmentIndexInput clone = in.clone();
-          if (clone.backoff.shouldProbe(++clone.prefetchCalls)) {
-            firstCallProbes++;
-          }
-        }
-        assertEquals(1, firstCallProbes);
-      }
-    }
-  }
-
   public void testPrefetchWithSingleSegment() throws IOException {
     testPrefetchWithSegments(64 * 1024);
   }

@@ -348,11 +348,11 @@ abstract class MemorySegmentIndexInput extends IndexInput implements MemorySegme
 
     ensureOpen();
 
-    if (backoff.shouldProbe(++prefetchCalls) == false) {
+    final NativeAccess nativeAccess = NATIVE_ACCESS.get();
+    if (backoff.shouldProbe(++prefetchCalls, nativeAccess) == false) {
       return false;
     }
 
-    final NativeAccess nativeAccess = NATIVE_ACCESS.get();
     return advise(
         offset,
         length,

@@ -16,141 +16,110 @@
  */
 package org.apache.lucene.store;
 
+import static org.apache.lucene.store.PrefetchBackoff.CHECK_EVERY;
 import static org.apache.lucene.store.PrefetchBackoff.N;
-import static org.apache.lucene.store.PrefetchBackoff.SKIP;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.lang.foreign.MemorySegment;
+import java.util.Optional;
 import org.apache.lucene.tests.util.LuceneTestCase;
-import org.apache.lucene.util.NamedThreadFactory;
+import org.apache.lucene.util.Constants;
 
 public class TestPrefetchBackoff extends LuceneTestCase {
 
-  private static void hit(PrefetchBackoff backoff, int times) {
-    for (int i = 0; i < times; i++) {
-      backoff.onHit();
+  /** A NativeAccess whose major fault count the test controls. */
+  private static final class FakeFaults extends NativeAccess {
+    long faults;
+
+    @Override
+    public void madvise(MemorySegment segment, ReadAdvice readAdvice) {}
+
+    @Override
+    public void madviseWillNeed(MemorySegment segment) {}
+
+    @Override
+    public int getPageSize() {
+      return 4096;
+    }
+
+    @Override
+    public long majorFaults() {
+      return faults;
     }
   }
 
-  /**
-   * Asserts the backoff is sampling: over SKIP * 4 calls from {@code seed}, exactly every SKIPth.
-   */
-  private static void assertSampling(PrefetchBackoff backoff, int seed) {
-    int calls = seed;
-    for (int i = 0; i < SKIP * 4; i++) {
-      calls++;
-      assertEquals("call " + calls, (calls & (SKIP - 1)) == 0, backoff.shouldProbe(calls));
-    }
+  private final FakeFaults faults = new FakeFaults();
+
+  // calls that never trigger a refresh of the fault epoch
+  private static int noCheck(int i) {
+    return i * CHECK_EVERY + 1;
   }
 
-  public void testConstants() {
-    assertEquals(1, Integer.bitCount(N));
-    assertEquals(1, Integer.bitCount(SKIP));
-  }
-
-  public void testFirstCallProbesThenSamplesOnHit() {
+  public void testFirstCallProbesThenStopsOnHit() {
     PrefetchBackoff backoff = new PrefetchBackoff();
-    int seed = backoff.nextSeed();
-    assertTrue(backoff.shouldProbe(++seed));
+    assertTrue(backoff.shouldProbe(noCheck(0), faults));
     backoff.onHit();
-    assertSampling(backoff, seed);
+    for (int i = 1; i < 10_000; i++) {
+      assertFalse("call " + i, backoff.shouldProbe(noCheck(i), faults));
+    }
   }
 
-  public void testStartsColdThenSamples() {
+  public void testNewFaultEpochProbesOnceThenStops() {
     PrefetchBackoff backoff = new PrefetchBackoff();
-    backoff.onMiss(); // a first-call miss puts the input on the full ramp
-    int seed = backoff.nextSeed();
-    for (int i = 0; i < N; i++) {
-      assertTrue("call " + i, backoff.shouldProbe(++seed));
-      backoff.onHit();
-    }
-    assertSampling(backoff, seed);
-  }
-
-  public void testPreloadedStartsSampling() {
-    PrefetchBackoff backoff = new PrefetchBackoff(true);
-    int seed = backoff.nextSeed();
-    assertSampling(backoff, seed);
-    // a miss still re-arms the full ramp
-    backoff.onMiss();
-    for (int i = 0; i < N; i++) {
-      assertTrue("call " + i, backoff.shouldProbe(++seed));
-      backoff.onHit();
-    }
-    assertSampling(backoff, seed);
+    assertTrue(backoff.shouldProbe(noCheck(0), faults));
+    backoff.onHit();
+    PrefetchBackoff.advanceEpochForTesting();
+    assertTrue(backoff.shouldProbe(noCheck(1), faults));
+    assertTrue("still unconfirmed until a probe hits", backoff.shouldProbe(noCheck(2), faults));
+    backoff.onHit();
+    assertFalse(backoff.shouldProbe(noCheck(3), faults));
   }
 
   public void testMissProbesUnconditionallyUntilNHits() {
     PrefetchBackoff backoff = new PrefetchBackoff();
-    hit(backoff, N);
-    assertSampling(backoff, 0);
     backoff.onMiss();
     for (int i = 0; i < N; i++) {
-      assertTrue("call " + i, backoff.shouldProbe(i));
+      assertTrue("call " + i, backoff.shouldProbe(noCheck(i), faults));
       backoff.onHit();
     }
-    assertSampling(backoff, 0);
+    assertFalse(backoff.shouldProbe(noCheck(N), faults));
   }
 
-  public void testHitsPastNAreNoOps() {
+  public void testMajorFaultsAdvanceTheEpoch() throws Exception {
     PrefetchBackoff backoff = new PrefetchBackoff();
-    hit(backoff, 100 * N);
-    assertSampling(backoff, 0);
-    // still exactly one miss away from re-arming
-    backoff.onMiss();
-    for (int i = 0; i < N; i++) {
-      assertTrue("call " + i, backoff.shouldProbe(i));
-      backoff.onHit();
-    }
-    assertSampling(backoff, 0);
+    assertTrue(backoff.shouldProbe(noCheck(0), faults));
+    backoff.onHit();
+    // let any earlier refresh go stale, then report a new fault
+    Thread.sleep(2 * PrefetchBackoff.REFRESH_NANOS / 1_000_000 + 1);
+    faults.faults += 1;
+    PrefetchBackoff.maybeRefreshEpoch(faults);
+    assertTrue(backoff.shouldProbe(noCheck(1), faults));
+    backoff.onHit();
+    // no new faults: the next refresh leaves the epoch alone
+    Thread.sleep(2 * PrefetchBackoff.REFRESH_NANOS / 1_000_000 + 1);
+    PrefetchBackoff.maybeRefreshEpoch(faults);
+    assertFalse(backoff.shouldProbe(noCheck(2), faults));
   }
 
-  public void testMissResetsAtAnyPoint() {
+  public void testCountersStartSpreadAcrossClones() {
     PrefetchBackoff backoff = new PrefetchBackoff();
-    for (int hits : new int[] {0, 1, N / 2, N - 1, N, 10 * N}) {
-      backoff.onMiss();
-      hit(backoff, hits);
-      backoff.onMiss();
-      // 1 is never a sampling call, so these can only pass because the counter was reset
-      assertTrue("hits=" + hits, backoff.shouldProbe(1));
-      backoff.onHit();
-      assertTrue("hits=" + hits, backoff.shouldProbe(1));
+    boolean[] seen = new boolean[CHECK_EVERY];
+    for (int i = 0; i < 4 * CHECK_EVERY; i++) {
+      seen[backoff.nextSeed() & (CHECK_EVERY - 1)] = true;
     }
+    int distinct = 0;
+    for (boolean b : seen) {
+      distinct += b ? 1 : 0;
+    }
+    assertTrue("distinct starting offsets: " + distinct, distinct > CHECK_EVERY / 2);
   }
 
-  public void testSeedsAreConsecutive() {
-    PrefetchBackoff backoff = new PrefetchBackoff();
-    int first = backoff.nextSeed();
-    for (int i = 1; i < 3 * SKIP; i++) {
-      assertEquals(first + i, backoff.nextSeed());
-    }
-  }
-
-  public void testConcurrentHitsAndProbes() throws Exception {
-    PrefetchBackoff backoff = new PrefetchBackoff();
-    int threads = 8;
-    ExecutorService exec =
-        Executors.newFixedThreadPool(threads, new NamedThreadFactory("TestPrefetchBackoff"));
-    try {
-      List<Future<?>> futures = new ArrayList<>();
-      for (int t = 0; t < threads; t++) {
-        futures.add(exec.submit(() -> hit(backoff, N)));
-      }
-      for (Future<?> f : futures) {
-        f.get();
-      }
-      futures.clear();
-      for (int t = 0; t < threads; t++) {
-        futures.add(exec.submit(() -> assertSampling(backoff, backoff.nextSeed())));
-      }
-      for (Future<?> f : futures) {
-        f.get();
-      }
-    } finally {
-      exec.shutdown();
-    }
+  public void testRealMajorFaultCounter() {
+    assumeTrue(
+        "getrusage layout is verified for Linux and macOS", Constants.LINUX || Constants.MAC_OS_X);
+    Optional<NativeAccess> nativeAccess = NativeAccess.getImplementation();
+    assumeTrue("native access is not enabled", nativeAccess.isPresent());
+    long before = nativeAccess.get().majorFaults();
+    assertTrue("majorFaults=" + before, before >= 0);
+    assertTrue(nativeAccess.get().majorFaults() >= before);
   }
 }
